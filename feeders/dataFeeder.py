@@ -1,6 +1,6 @@
 import pandas as pd 
 import numpy as np 
-
+import regex
 
 class DataFeeder():
 
@@ -17,8 +17,22 @@ class DataFeeder():
 
         return: DataFrame ordenado.
         """
-        pass
-    
+        data = self.dropUseless(dataFrame)
+        data = data.apply(pd.to_numeric)
+        data.datetime = pd.to_datetime(data.datetime, unit='ms')
+        data = data.set_index("datetime")
+        return data
+
+
+
+    def dropUseless(self,DataFrame):
+        
+        data = DataFrame
+        importantValues = ["datetime","O","H","L","C","V"]
+        df_important = data[importantValues]
+        return df_important   
+        
+        
     def normalizeCoins(self,coins):
         """The idea of this method is that every exchanga has his owns coin-pair name
         i.e.: Binance ETH BTC Pair is ETHBTC
@@ -28,12 +42,7 @@ class DataFeeder():
 
         return List of coins normalize.
               
-        """ 
-        pass
-
-    def authentication(self,*args, **kwargs):
-        """Metodo par autentificar la identidad del usuario con cualquier exchange
-
         """
+     
         pass
     

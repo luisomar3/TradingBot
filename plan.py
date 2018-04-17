@@ -95,18 +95,31 @@ class strategy_name(indicators):
         if adx() is 1 buy 0 do nothing -1 sell.
     
 class trader():
-    pass
+    pass #creo que lo más optimo es una lista con las ordenes y posiciones a tomar en cada moneda.
 
 class portfolio():
     pass
-    
+    positionSizing #En espera de decision si binance o python-binance. Recibirá un dataFrame
+                   #con las ordenes de compra, y determinará cuanto debe comprar o vender y agregarlo
+                   # a una columna en el df.
+
 class accounting():
-    pass
+    pass    #Esta clase vigilará el p&l y si es solicitado una curva grafica de las ganancias con 
+            #cada trade que será guardada en la carpeta root.
+            #estrechamente relacionada con portfolio. 
 
+class robot():
+    """This class is the main class, it runs everything from feeders to auth
+    It should be initialize with the cypher pass
+    It should be run indefinitly 
+
+    """
+    
+    #Buscar librerias para el manejo de estas, probablemente terminemos con crontabs y scheduler.
+    #Si crontab no se puede usar mejor. Esta será la clase más modular. 
 
 
     
-
+class liveTrade():
     
-
 
