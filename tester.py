@@ -6,8 +6,8 @@ from indicadores import *
 from feeders.binanceFeeder import BinanceFeeder
 from binance.client import Client
 
-from basestrategy import BaseStrategy
-from estrategiaadx import EstrategiaAdx
+from estrategias.basestrategy import BaseStrategy
+from estrategias.estrategiaadx import EstrategiaAdx
 
 from config import config
 coin = config['coin']
