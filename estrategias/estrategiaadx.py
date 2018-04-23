@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np 
 
 from config import config
-from basestrategy import BaseStrategy
+from estrategias.basestrategy import BaseStrategy
 from indicadores import *
 
 indicadores = Indicadores()
