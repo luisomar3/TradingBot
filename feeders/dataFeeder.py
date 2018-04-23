@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import regex
 
+pd.options.mode.chained_assignment = None
 class DataFeeder():
 
     def __init__():
@@ -9,7 +10,7 @@ class DataFeeder():
         self.keys 
         self.name = name 
     
-    def normalizeKlines(self,dataFrame):
+    def normalizeKlines(self,dataFrame,columnsName):
         """ Recibe un Pandas DataFrame y normaliza sus columnas para que todas tengan un mismo formato
         DTOHLC (Date, Time, Open, High, Low, Close)
         :param dataFrame: Pandas DF contenedor, contiene los datos como los trae por defecto el provider.
@@ -17,10 +18,13 @@ class DataFeeder():
 
         return: DataFrame ordenado.
         """
+        data = dataFrame
         data = self.dropUseless(dataFrame)
-        data = data.apply(pd.to_numeric)
         data.datetime = pd.to_datetime(data.datetime, unit='ms')
         data = data.set_index("datetime")
+        
+        data = data.apply(pd.to_numeric)
+        
         return data
 
 

@@ -2,5 +2,6 @@
 *.docx
 myvenv
 .vscode
+private
 credentials.txt
 __pycache__
