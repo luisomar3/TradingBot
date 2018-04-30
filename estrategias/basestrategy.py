@@ -10,7 +10,7 @@ cryptoMoneda = config['coin']
 
 class BaseStrategy():
 
-    def strategySignal(self, dataFrame):
+    def __strategySignal(self, dataFrame):
         """Extrae la señal del dataFrame generado 
         por la estrategia, esta clase es para ser usada por el liveTrade para ver el tipo de orden que tiene que poner 
         1 para comprar. 0 para no hacer nada y -1 para vender.
@@ -27,9 +27,9 @@ class BaseStrategy():
         """ Metodo para extraer estadisticas generales de la estrategia.
 
         """
-        señal = dataFrame.copy()
+        data = dataFrame.copy()
 
-        señal =  self.strategySignal(señal)
+        señal =  self.__strategySignal(data)
 
         item = int(señal['signal'].values)
 
@@ -39,7 +39,7 @@ class BaseStrategy():
         elif item == -1 :
             print('Se ha vendido la moneda {c} a {p}'.format(c = cryptoMoneda, p = señal['C']))
 
-            print(ganancia)
+            
         else:
             print('No se ha encontrado oportunidad de entrada/salida')
         
