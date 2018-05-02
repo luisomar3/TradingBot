@@ -6,6 +6,7 @@ from feeders.dataFeeder import DataFeeder
 from binance.client import Client
 from config import config
 
+base = config['MonedaBase']
 intervalo = config['interval']
 client = Client('','')
 
@@ -15,13 +16,14 @@ class BinanceFeeder(DataFeeder):
         
 
     def get_candle(self,coin):
-        
-        # klines = pd.DataFrame(client.get_klines(symbol = coin, interval = intervalo),
-        # columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
-        # #Arreglo especifico de exchange
 
-        klines = pd.DataFrame(client.get_historical_klines(coin,intervalo,"1 Ago, 2016"),
+        mercado = coin + base
+        klines = pd.DataFrame(client.get_klines(symbol = mercado, interval = intervalo),
         columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
+        #Arreglo especifico de exchange
+        # mercado = coin + base
+        # klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,"1 Ago, 2016"),
+        # columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
         
         columnsName = klines.columns.values.tolist()
         candles = self.normalizeKlines(klines,columnsName)

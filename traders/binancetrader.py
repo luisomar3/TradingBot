@@ -9,6 +9,7 @@ from config import config
 
 coin = config['coin']
 intervalo = config['interval']
+monedaBase = config['MonedaBase']
 
 #from binance.client import Client
 from binance.enums import *
@@ -38,6 +39,30 @@ class BinanceTrader(BaseTrader):
         price='0.00001')
 
         return 'placed'
+
+    def equivalent(self,posicion,price):
+        """Metodo para calcular el equivalente en MONEDA de X cantidad de BTC
+        """
+        equivlalente = posicion/price
+
+        return  equivlalente
+
+    def market_buy(self,moneda,cantidad):
+        """Metodo para  realizar un market buy
+        """
+        mercado = moneda+monedaBase
+        order = client.order_market_buy(symbol=mercado,quantity=cantidad)
+
+        return order
+
+    def market_sell(self,moneda,cantidad):
+        """Metodo para  realizar un market buy
+        """
+        mercado = moneda+monedaBase
+        order = client.order_market_sell(symbol=mercado,quantity=cantidad)
+        return order
+
+        
 
 
 

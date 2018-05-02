@@ -42,17 +42,23 @@ class BinanceAccount():
 
         coinBase  = self.client.get_asset_balance(asset=monedaBase)
         
-        print('\n La moneda base es: \n\n', coinBase,'\n\n')
+        print('\n La moneda base es:{coin} \n\n'.format( coin = coinBase['asset']),'\n\n',
+        'Su capital de trabajo es : {cap}'.format(cap = coinBase['free']))
 
-        print('Su portafolio de monedas es : \n\n')
+        print('\n Su portafolio de monedas es : \n\n')
         lista = []
         for moneda in monedas:
 
             balance = self.client.get_asset_balance(asset=moneda)
-            lista.append(balance)
+            if balance is not None:
+
+                lista.append(balance)
+            else :
+                print("Se ha excluido {coin} del sistema, por favor revisar moneda".format(coin = moneda))
             
         df_balance = pd.DataFrame(lista)
         df_balance = df_balance.set_index('asset')
+        print(df_balance.to_string())
         return coinBase, df_balance
 
     def capital(self):

@@ -32,18 +32,8 @@ class BaseStrategy():
         señal =  self.__strategySignal(data)
 
         item = int(señal['signal'].values)
-
-        if  item == 1 :
-            print('Se ha comprado la moneda {c} a {p}'.format(c = cryptoMoneda, p = señal['C']))
-
-        elif item == -1 :
-            print('Se ha vendido la moneda {c} a {p}'.format(c = cryptoMoneda, p = señal['C']))
-
-            
-        else:
-            print('No se ha encontrado oportunidad de entrada/salida')
         
-        return señal['signal']
+        return item
 
     def crossover(self,row,indicadorAlza,indicadorBaja):
         """Realiza el crossover de 2 indicadores, si el indicador de alza supera al de baja,
