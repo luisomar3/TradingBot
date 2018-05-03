@@ -21,17 +21,19 @@ scheduler = BlockingScheduler()
 
 posicion = config['capital']/len(monedas)
 
+df = pd.DataFrame(columns = ['ID','MONEDA','CANTIDADC','PRECIOC','CANTIDADV','PRECIOV','GANANCIA','GANACIA%'])
+
 def acces():
     """Funcion que habilita el uso de la cuenta
     """
     
     if cuenta.habilitado == True:
         print('Acceso a cuenta exitoso')
-        time.sleep(5)
+        time.sleep(0.5)
         monedaBase, portafolio = cuenta.portafolio(monedas)
         cliente = cuenta.client
         print('\n\n Su posicion optima es : {optima} BTC por trade'.format(optima = posicion))
-        time.sleep(5)
+        time.sleep(0.5)
         return cliente
     else:
         return None
@@ -39,9 +41,12 @@ def acces():
 def liveTrader(cliente):
 
     print('Actualizando mercado')
+    contador = 1
+
     for moneda in monedas:
         datos = feeder.get_candle(moneda)
-
+        print(cuenta.inTheMarket(posicion,moneda))
+        print('awui')
         analizados =  estrategia.PDI_NDI_Cossover(datos)
         #print(analizados)
         señal = estrategia.message(analizados)
@@ -52,6 +57,7 @@ def liveTrader(cliente):
         if señal == 1 :
             
             print('Hola compré {coin}'.format(coin = moneda))
+            
             try:
                 print(valorMoneda)
                 compra = trader.market_buy(moneda,valorMoneda)
@@ -70,6 +76,9 @@ def liveTrader(cliente):
 
         else:
             print('Esperando Señal para {coin}'.format(coin = moneda))
+            row = {'MONEDA': moneda,'CANTIDADC' : valorMoneda ,'PRECIOC' : price}
+            df = df.append(row,ignore_index = True)
+            print(df)
 
 
         
@@ -88,5 +97,5 @@ if __name__ == '__main__':
     acceso = acces()
 
     if acceso is not None:
-        main(acceso)
+        liveTrader(acceso)
 

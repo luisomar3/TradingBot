@@ -40,10 +40,6 @@ def run():
     print(contador)
     a = adxStrategy.PDI_NDI_Cossover(candles)
     print(a.to_string())
-    if contador == 15:
-        #adxStrategy.plot(a)
-        print(a.to_string())
-        contador = 0
 
     b = adxStrategy.message(a)
     print(b.to_string(header = False,dtype=False))

@@ -68,4 +68,9 @@ class BinanceAccount():
 
         return capital
 
-    
+    def inTheMarket(self,posicion,coint):
+
+
+        balance = self.client.get_asset_balance(asset=coint)
+
+        print(balance)
