@@ -1,12 +1,16 @@
 config = {
 
-    "adx_window" : 14,
+    "api_key":'AIc1YLwGtRDJzy4wpMRe7CcAUBxTMIIfT1ddhQOhTJbHRP2xqhMkIyt5EABHLPZt',
+
+    "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
+
+    "adx_window" : 14,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'LOOM',
+    "monedaSimulacion": 'LOOM',  #moneda para simular y graficar ganancias.
 
-    "fechaInicio" : "1 Jan, 2016", #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
+    "fechaInicio" : "1 Feb, 2018", #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
-    "capitalSimulacion" : 0.010,
+    "capitalSimulacion" : 0.010, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
@@ -14,9 +18,9 @@ config = {
 
     'interval' : '1m', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
 
-    'capital' : 10,  #EL CAPITAL EXPRESADO EN BTC 
+    'posicion' : 10,  #Porcentaje del capital para tomar posicion
     
-    "cron_intervals" : {"1m": "*/1", "1M": "*/5", 'thirtyMin' : '*/30','4h':'2', 'hour':'*/30 ','day':'*/1'} 
+    "cron_intervals" : {'1m':'1m',"1h": "*/1", "2h": "*/2", '3h' : '*/3','4h':'*/4', '5h': '*/5', '6h':'*/6'} 
 
 
 }

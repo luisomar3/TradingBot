@@ -19,7 +19,11 @@ trader = BinanceTrader()
 monedas = config['monedas']
 scheduler = BlockingScheduler()
 
-posicion = config['capital']/len(monedas)
+intervalo =  config['interval']
+intervals =config['cron_intervals']
+crontrigger = intervals[intervalo]
+
+
 
 df = pd.DataFrame(columns = ['ID','MONEDA','CANTIDADC','PRECIOC','CANTIDADV','PRECIOV','GANANCIA','GANACIA%'])
 
@@ -31,7 +35,10 @@ def acces():
         print('Acceso a cuenta exitoso')
         time.sleep(0.5)
         monedaBase, portafolio = cuenta.portafolio(monedas)
+        capitalSTR = cuenta.capital()
+        capitalINT = float(capitalSTR)
         cliente = cuenta.client
+        posicion = capitalINT / len(monedas)
         print('\n\n Su posicion optima es : {optima} BTC por trade'.format(optima = posicion))
         time.sleep(0.5)
         return cliente
@@ -42,11 +49,17 @@ def liveTrader(cliente):
 
     print('Actualizando mercado')
     contador = 1
-
+    capital = cuenta.capital()
+    
     for moneda in monedas:
         datos = feeder.get_candle(moneda)
-        print(cuenta.inTheMarket(posicion,moneda))
-        print('awui')
+        capitalSTR = cuenta.capital()
+        capitalINT = float(capitalSTR)
+        cliente = cuenta.client
+        posicion = capitalINT / len(monedas)
+        montoMoneda = cuenta.inTheMarket(posicion,moneda)
+        print(montoMoneda)
+        priunt(type(montoMoneda))
         analizados =  estrategia.PDI_NDI_Cossover(datos)
         #print(analizados)
         señal = estrategia.message(analizados)
@@ -54,9 +67,9 @@ def liveTrader(cliente):
         
         valorMoneda = trader.equivalent(posicion,price)
 
-        if señal == 1 :
+        if señal == 1 & (posicion >= montoMoneda)  :
             
-            print('Hola compré {coin}'.format(coin = moneda))
+            print('compré {coin}'.format(coin = moneda))
             
             try:
                 print(valorMoneda)
@@ -64,9 +77,9 @@ def liveTrader(cliente):
             except Exception as e:
                 print(e.message)
 
-        elif señal == -1:
+        elif señal == -1  :
 
-            print('Hola vendí {coin}'.format(coin = moneda))
+            print('vendí {coin}'.format(coin = moneda))
             try:
                 print(valorMoneda)
                 venta = trader.market_sell(moneda,valorMoneda)
@@ -89,7 +102,7 @@ def main(acceso):
     """
 
     scheduler.add_job(liveTrader, trigger='cron',
-                          minute='*/1', args=[acceso])
+                          minute='*/5', args=[acceso])
     scheduler.start()
 
 if __name__ == '__main__':
@@ -97,5 +110,5 @@ if __name__ == '__main__':
     acceso = acces()
 
     if acceso is not None:
-        liveTrader(acceso)
+        main(acceso)
 

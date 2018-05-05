@@ -3,6 +3,9 @@ from binance.client  import Client
 
 from config import config
 
+api = config['api_key']
+key = config['secret_key']
+
 monedaBase = config['MonedaBase']
 
 
@@ -13,8 +16,8 @@ class BinanceAccount():
     """
     def __init__(self):
 
-        apiKey = 'AIc1YLwGtRDJzy4wpMRe7CcAUBxTMIIfT1ddhQOhTJbHRP2xqhMkIyt5EABHLPZt'
-        secretKey = "I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe"
+        apiKey = api
+        secretKey = key
         
         
 

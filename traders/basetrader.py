@@ -4,7 +4,6 @@ import numpy as numpy
 import time 
 from config import config
 
-coin = config['coin']
 intervalo = config['interval']
 
 from binance.client import Client

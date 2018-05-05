@@ -7,7 +7,7 @@ import numpy as numpy
 import time 
 from config import config
 
-coin = config['coin']
+
 intervalo = config['interval']
 monedaBase = config['MonedaBase']
 
