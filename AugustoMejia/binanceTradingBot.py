@@ -25,7 +25,7 @@ crontrigger = intervals[intervalo]
 
 
 
-
+df = pd.DataFrame(columns = ['ID','MONEDA','CANTIDADC','PRECIOC','CANTIDADV','PRECIOV','GANANCIA','GANACIA%'])
 
 def acces():
     """Funcion que habilita el uso de la cuenta
@@ -52,36 +52,30 @@ def liveTrader(cliente):
     capital = cuenta.capital()
     
     for moneda in monedas:
-       
         datos = feeder.get_candle(moneda)
-        
         capitalSTR = cuenta.capital()
         capitalINT = float(capitalSTR)
         cliente = cuenta.client
         posicion = capitalINT / len(monedas)
         montoMoneda = cuenta.inTheMarket(posicion,moneda)
-        floatMoneda = float(montoMoneda)
-
+        print(montoMoneda)
+        priunt(type(montoMoneda))
         analizados =  estrategia.PDI_NDI_Cossover(datos)
         #print(analizados)
         señal = estrategia.message(analizados)
         price = analizados['C'].iloc[-1]
-        #print(señal)
+        
         valorMoneda = trader.equivalent(posicion,price)
-        df = pd.DataFrame(columns = ['ID','MONEDA','CANTIDADC','PRECIOC','CANTIDADV','PRECIOV','GANANCIA','GANACIA%'])
-        print('señal',señal)
-        if (señal == 1) :
+
+        if señal == 1 & (posicion >= montoMoneda)  :
             
-            if (posicion >= floatMoneda)  :
-                print('compré {coin}'.format(coin = moneda))
-                
-                try:
-                    print(valorMoneda)
-                    compra = trader.market_buy(moneda,valorMoneda)
-                except Exception as e:
-                    print(e.message)
-            else :
-                print('Existe señal pero no tiene capital suficiente para realizar la transaccion')
+            print('compré {coin}'.format(coin = moneda))
+            
+            try:
+                print(valorMoneda)
+                compra = trader.market_buy(moneda,valorMoneda)
+            except Exception as e:
+                print(e.message)
 
         elif señal == -1  :
 
@@ -108,7 +102,7 @@ def main(acceso):
     """
 
     scheduler.add_job(liveTrader, trigger='cron',
-                          minute='*/1', args=[acceso])
+                          minute='*/5', args=[acceso])
     scheduler.start()
 
 if __name__ == '__main__':

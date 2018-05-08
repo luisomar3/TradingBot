@@ -62,29 +62,8 @@ class BinanceTrader(BaseTrader):
         order = client.order_market_sell(symbol=mercado,quantity=cantidad)
         return order
 
-    def get_open_orders(self,moneda):
         
-        mercado = moneda+monedaBase
-        open_orders = client.get_open_orders(symbol=mercado)
-        df_orders = pd.DataFrame(open_orders)
-        return df_orders
 
-    def cancel_order(self,moneda):
-
-        orders = self.get_open_orders(moneda)
-        df_orders= pd.DataFrame(orders)
-        ids = df_orders['orderId']
-        mercado = moneda+monedaBase
-
-        for item in ids:
-
-            print(mercado)
-            client.cancel_order(symbol=mercado,orderId=item)
-        
-        return 'hola'
-
-        
-        
 
 
 

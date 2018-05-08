@@ -76,4 +76,4 @@ class BinanceAccount():
 
         balance = self.client.get_asset_balance(asset=coint)
 
-        return balance['free']
+        print(balance)

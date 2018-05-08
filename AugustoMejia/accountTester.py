@@ -15,7 +15,6 @@ from traders.binancetrader  import BinanceTrader
 
 trader = BinanceTrader()
 account = BinanceAccount()
-cliente = account.client
 
 def main():
     
@@ -25,14 +24,13 @@ def main():
 
     if habilitado == True:
 
- 
-        order = cliente.order_limit_sell(
-        symbol='BNBBTC',
-        quantity=0.67,
-        price='0.001600')
-        
+        monedaPrincipal,portafolio = account.portafolio(monedas)
 
-        print(order)
+        print(portafolio)
+        
+        print(account.capital())
+        print(trader.place_test_order())
+
 
 
 

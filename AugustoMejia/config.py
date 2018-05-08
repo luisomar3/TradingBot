@@ -6,17 +6,17 @@ config = {
 
     "adx_window" : 14,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'BNB',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'LOOM',  #moneda para simular y graficar ganancias.
 
-    "fechaInicio" : "1 Jan, 2016", #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
+    "fechaInicio" : "1 Feb, 2018", #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
     "capitalSimulacion" : 0.010, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['BNB','ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'interval' : '4h', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
+    'interval' : '1m', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
 
     'posicion' : 10,  #Porcentaje del capital para tomar posicion
     

@@ -19,14 +19,14 @@ class BinanceFeeder(DataFeeder):
 
     def get_candle(self,coin):
 
-        mercado = coin + base
-        klines = pd.DataFrame(client.get_klines(symbol = mercado, interval = intervalo),
-        columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
+        # mercado = coin + base
+        # klines = pd.DataFrame(client.get_klines(symbol = mercado, interval = intervalo),
+        # columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
         #Arreglo especifico de exchange
 
-        # mercado = coin + base
-        # klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,inicio),
-        #         columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
+        mercado = coin + base
+        klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,inicio),
+                columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
         
         columnsName = klines.columns.values.tolist()
         candles = self.normalizeKlines(klines,columnsName)
