@@ -62,6 +62,22 @@ class BinanceTrader(BaseTrader):
         order = client.order_market_sell(symbol=mercado,quantity=cantidad)
         return order
 
+    def in_the_market(self,moneda,posicion):
+        """Metodo para saber si estoy o no en el mercado
+        """
+        infoActivo = client.get_asset_balance(moneda)
+        comprado = float(infoActivo['free'])
+        if comprado > posicion :
+            inTheMarket = 1  # Verifico que la posicion sea mayor al monto q poseo en esa moneda.
+        else:
+            inTheMarket = 0
+
+        return inTheMarket 
+        
+        
+        
+        
+
         
 
 

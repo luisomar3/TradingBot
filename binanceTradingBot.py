@@ -40,6 +40,7 @@ def acces():
         cliente = cuenta.client
         posicion = capitalINT / len(monedas)
         print('\n\n Su posicion optima es : {optima} BTC por trade'.format(optima = posicion))
+        print('Esperando para iniciar ')
         time.sleep(0.5)
         return cliente
     else:
@@ -53,35 +54,40 @@ def liveTrader(cliente):
     
     for moneda in monedas:
         datos = feeder.get_candle(moneda)
-        capitalSTR = cuenta.capital()
-        capitalINT = float(capitalSTR)
+
+        capital = cuenta.capital()
+        
         cliente = cuenta.client
-        posicion = capitalINT / len(monedas)
-        montoMoneda = cuenta.inTheMarket(posicion,moneda)
-        print(montoMoneda)
-        priunt(type(montoMoneda))
+        posicion = capital / len(monedas)
+        
         analizados =  estrategia.PDI_NDI_Cossover(datos)
-        #print(analizados)
+        print(analizados)
         señal = estrategia.message(analizados)
+
         price = analizados['C'].iloc[-1]
         
         valorMoneda = trader.equivalent(posicion,price)
-
-        if señal == 1 & (posicion >= montoMoneda)  :
+        
+        inTheMarket= trader.in_the_market(moneda,posicion)
+        print(inTheMarket)
+        print(señal)
+        if (señal == 1) & (inTheMarket==0) :
             
-            print('compré {coin}'.format(coin = moneda))
+            
             
             try:
-                print(valorMoneda)
+                print('Se compraron {cantidad} {coin} a {precio}'.format(
+                    cantidad = valorMoneda, coin = moneda, precio=price))
                 compra = trader.market_buy(moneda,valorMoneda)
             except Exception as e:
                 print(e.message)
 
-        elif señal == -1  :
+        elif (señal == -1) & (inTheMarket == 1 ):
 
-            print('vendí {coin}'.format(coin = moneda))
+           
             try:
-                print(valorMoneda)
+                print('Se vendieron {cantidad} {coin} a {precio}'.format(
+                    cantidad = valorMoneda, coin = moneda, precio = price))
                 venta = trader.market_sell(moneda,valorMoneda)
             except Exception as e:
                 print(e.message)
@@ -89,9 +95,7 @@ def liveTrader(cliente):
 
         else:
             print('Esperando Señal para {coin}'.format(coin = moneda))
-            row = {'MONEDA': moneda,'CANTIDADC' : valorMoneda ,'PRECIOC' : price}
-            df = df.append(row,ignore_index = True)
-            print(df)
+
 
 
         
@@ -102,7 +106,7 @@ def main(acceso):
     """
 
     scheduler.add_job(liveTrader, trigger='cron',
-                          minute='*/5', args=[acceso])
+                          hour=crontrigger, args=[acceso])
     scheduler.start()
 
 if __name__ == '__main__':

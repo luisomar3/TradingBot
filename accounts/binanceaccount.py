@@ -67,7 +67,7 @@ class BinanceAccount():
     def capital(self):
 
         infoActivo = self.client.get_asset_balance(monedaBase)
-        capital = infoActivo['free']
+        capital = float(infoActivo['free'])
 
         return capital
 

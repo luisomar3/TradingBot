@@ -29,7 +29,7 @@ def main():
         print(portafolio)
         
         print(account.capital())
-        print(trader.place_test_order())
+        print(trader.in_the_market('BNB',0.01))
 
 
 

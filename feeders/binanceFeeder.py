@@ -8,6 +8,7 @@ from binance.client import Client
 from config import config
 
 inicio = config['fechaInicio']
+final = config['fechaFinal']
 base = config['MonedaBase']
 intervalo = config['interval']
 client = Client('','')
@@ -25,7 +26,7 @@ class BinanceFeeder(DataFeeder):
         #Arreglo especifico de exchange
 
         mercado = coin + base
-        klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,inicio),
+        klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,inicio,final),
                 columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
         
         columnsName = klines.columns.values.tolist()
