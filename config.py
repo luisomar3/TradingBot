@@ -8,9 +8,7 @@ config = {
     
     "monedaSimulacion": 'ETH',  #moneda para simular y graficar ganancias.
 
-    "fechaInicio" : "1 Jan, 2018",
-    
-    "fechaFinal"  : "30 Jan 2018" ,  #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
+    "fechaInicio" : "1 JAN, 2016", #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
     "capitalSimulacion" : 0.010, #Posicion a invertir para la optimizacion del portafolio
     
@@ -18,7 +16,7 @@ config = {
 
     'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'interval' : '4h', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
+    'interval' : '1m', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
 
     'posicion' : 10,  #Porcentaje del capital para tomar posicion
     

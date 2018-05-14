@@ -106,7 +106,7 @@ def main(acceso):
     """
 
     scheduler.add_job(liveTrader, trigger='cron',
-                          hour=crontrigger, args=[acceso])
+                          minute=crontrigger, args=[acceso])
     scheduler.start()
 
 if __name__ == '__main__':
