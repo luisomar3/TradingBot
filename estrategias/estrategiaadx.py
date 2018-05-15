@@ -24,7 +24,17 @@ class EstrategiaAdx(BaseStrategy):
         datos = dataFrame.copy()
         datos = indicadores.ADX(datos)
         datos['signal'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
-        
+        #print(len(datos))
+        for index,row in datos['signal'].iteritems():
+            if (row!=0) & (row==-1):
+                #print(row,'primer valor venta')
+                datos.drop(index, inplace=True)
+                break
+            
+            if (row!=0) & (row== 1):
+                #print(row,'primer valor c')
+                break
+        #print(len(datos))
         return datos
 
     def plot_and_stats(self,data1,moneda,plot=True,historico=True):
@@ -32,8 +42,9 @@ class EstrategiaAdx(BaseStrategy):
         """
         mercado = moneda+monedaBase
         data = data1.copy()
-        compra= data[data['signal']==1][3:]
-        venta = data[data['signal']==-1][3:]
+        compra= data[data['signal']==1]
+        venta = data[data['signal']==-1]    
+
         df_compras = pd.DataFrame()
 
         df_compras['compras']= compra['C']
@@ -42,13 +53,17 @@ class EstrategiaAdx(BaseStrategy):
         df_compras = df_compras.rename({'datetime':'datetimecompras'},axis='columns')
 
         df_ventas = pd.DataFrame()
+        
+ 
+        df_ventas['ventas']  = venta['C']    
 
-        df_ventas['ventas']  = venta['C']
         #df_ventas['ventasMoneda'] = capital/df_ventas['ventas']
-        df_ventas = df_ventas.reset_index()
 
+        df_ventas = df_ventas.reset_index()
+        
         dfProfit = pd.DataFrame()
         dfProfit = pd.concat([df_compras,df_ventas],ignore_index = False, axis = 1)
+        print(dfProfit)
         dfProfit['total'] = (dfProfit['ventas']-dfProfit['compras'])
         nombre = 'cantidad'+moneda
         dfProfit[nombre] = capital/dfProfit['compras']
@@ -63,10 +78,9 @@ class EstrategiaAdx(BaseStrategy):
         #dfProfit['cumsumCapital'] = dfProfit['monedaTotal'].cumsum()
         
         if historico == True:
-            print(dfProfit[['compras',nombre,'ventas','cantidadBTC'
-            ,'porcentajeBTC','datetime','cumsumPorcentaje','gananciasBTC','acumuladoGanancias']].to_string())
+            print(dfProfit[['compras',nombre,'ventas','porcentajeBTC','datetime','cumsumPorcentaje','gananciasBTC','acumuladoGanancias']].to_string())
             
-        numeroOperaciones = len(compra) + len(venta)
+        numeroOperaciones = int((len(compra) + len(venta))/2)
         
         averageGanancias = dfProfit['gananciasBTC'].mean()
         averagePorcentaje = dfProfit['porcentajeBTC'].mean()
