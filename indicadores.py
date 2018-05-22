@@ -1,5 +1,6 @@
 import pandas as pd 
 import numpy as np 
+from ta import *
 
 import matplotlib.pyplot as plt 
 import matplotlib.dates as mdates
@@ -83,9 +84,15 @@ class Indicadores():
 
         dfHelper['TR'] = dfHelper[['CH-CL','CH-PC','CL-PC']].max(axis=1)
         datos['TR'] = dfHelper['TR']
+        datos['shiftedTR'] = datos['TR'].shift(1)
+
+        datos['smoothedTR'] = datos['shiftedTR'] - (datos['shiftedTR']/window) + datos['TR']
+
+        
+
         datos['ATR'] = self.promedioMovilExponcial(dfHelper['TR'],window)
-        datos['ATR2'] = dfHelper['TR'].rolling(window).mean()
-        datos['ATR3'] = dfHelper['TR'].ewm(span=window,adjust = False).mean()
+        datos['ATR2'] = datos['smoothedTR'].rolling(14).mean()
+        #datos['ATR3'] = dfHelper['TR'].ewm(span=window,adjust = False).mean()
        
         
         return datos
@@ -93,55 +100,17 @@ class Indicadores():
     def ADX(self,data):
         """Indicador ADX
         """
-        dfHelper = data.copy()
-        dfHelper = self.calcularDM(dfHelper)
-        dfHelper = self.ATR(dfHelper)
-
-        #dfHelper['emaPDM'] = dfHelper['PDM'].ewm(span=window,adjust = False).mean()
-        dfHelper['emaPDM'] = dfHelper['PDM'].rolling(window).mean()
-        dfHelper['shifted_ema_pdm'] = dfHelper['emaPDM'].shift(1)
-        dfHelper['smoothedPDM'] = dfHelper['shifted_ema_pdm'] - (dfHelper['shifted_ema_pdm']/window) + dfHelper['emaPDM']
         
+        data['ADX'] = adx(data['H'],data['L'],data['C'], n = window, fillna = False )  
+        data['NS_PDI'] = adx_pos(data['H'],data['L'],data['C'], n = window, fillna = False)
+        #data['PDI'] = data['PDI'].shift)1
+        data['PDI'] = data['NS_PDI'].shift() - (data['NS_PDI'].shift()/window) + data['NS_PDI'] 
         
-        #dfHelper['emaNDM'] = dfHelper['NDM'].ewm(span=window,adjust = False).mean()
-        dfHelper['emaNDM'] =  dfHelper['NDM'].rolling(window).mean()
-        dfHelper['shifted_ema_ndm'] = dfHelper['emaNDM'].shift(1)
-        dfHelper['smoothedNDM'] = dfHelper['shifted_ema_ndm'] - (dfHelper['shifted_ema_ndm']/window) + dfHelper['emaNDM']
-
-
-        dfHelper['shifted_TR'] = dfHelper['ATR2'].shift(1)
-        smoothedTR = dfHelper['shifted_TR'] - (dfHelper['shifted_TR']/window) + dfHelper['ATR2']
-
-       
-        #print(dfHelper[['emaPDM','shifted_ema_pdm','smoothedPDM','emaNDM','shifted_ema_ndm','smoothedNDM']].to_string())
-        # data['PDI'] = 100 * ( emaPDM / dfHelper['ATR2'])
-        # #Calcular el indice positivo
-        # data['NDI'] = 100 * ( emaNDM / dfHelper['ATR2'])
-        # #calcular el indice negativo
-
-
-        data['PDI'] = 100 * (dfHelper['smoothedPDM'] / smoothedTR)
-
-        data['NDI'] = 100 * (dfHelper['smoothedNDM']/ smoothedTR)
-
-        data['shift_PDI'] = data['PDI'].shift(1)
-        #creamos una columna con fecha pasada para evaluar el crossover
-        data['shift_NDI'] = data['NDI'].shift(1)
+        data['NS_NDI'] = adx_neg(data['H'],data['L'],data['C'], n = window, fillna = False) 
+        #data['NDI'] = data['NDI'].shift(-1)
+        data['NDI'] = data['NS_NDI'].shift() - (data['NS_NDI'].shift()/window) + data['NS_NDI']
         
-        
-        terminoDividendo= abs(data['PDI']-data['NDI'])
-        terminoDivisor = data['PDI'] + data['NDI']
-
-     
-        
-        dfHelper['dx_calculation'] = 100 * ( terminoDividendo / terminoDivisor)
-
-      
-
-        #data['ADX'] = self.promedioMovilExponcial(dfHelper['dx_calculation'],window)
-        data['ADX'] =   dfHelper['dx_calculation'].rolling(window).mean()
-        data['emaC'] = self.promedioMovilExponcial(data['C'],window)
-
-        
+        data['shift_PDI'] = data['PDI'].shift()
+        data['shift_NDI'] = data['NDI'].shift()
         return data
 

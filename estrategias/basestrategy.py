@@ -43,11 +43,11 @@ class BaseStrategy():
         inBajaAnterior = 'shift_'+ indicadorBaja
         #se le agrega el prefijo shift porque así esta en el DataFrame armado.
            
-        if (row[indicadorAlza] > row[indicadorBaja] ) & (row[inBajaAnterior] > row[inAlzaAnterior])  :
+        if (row[indicadorAlza] > row[indicadorBaja] ) & (row[inBajaAnterior] >= row[inAlzaAnterior])  :
             inTheMarket = True 
             #Si PDI es mayor que NDI y anteriormente NDI era mayor (PDI supera NDI) doy señal de compra 
             return  1
-        elif (row[indicadorBaja] > row[indicadorAlza] ) & (row[inAlzaAnterior] > row[inBajaAnterior]) :
+        elif (row[indicadorBaja] > row[indicadorAlza] ) & (row[inAlzaAnterior] >= row[inBajaAnterior]) :
             inTheMarket = False
             #Si NDI es mayor que PDI y anteriormente PDI era mayor (NDI supera PDI) doy señal de venta
             return -1    

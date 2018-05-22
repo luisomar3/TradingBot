@@ -54,14 +54,14 @@ def liveTrader(cliente):
     
     for moneda in monedas:
         datos = feeder.get_candle(moneda)
-
+        datos = datos.shift(-1)
         capital = cuenta.capital()
         
         cliente = cuenta.client
         posicion = capital / len(monedas)
         
         analizados =  estrategia.PDI_NDI_Cossover(datos)
-        print(analizados)
+        #print(analizados)
         señal = estrategia.message(analizados)
 
         price = analizados['C'].iloc[-1]
@@ -114,5 +114,5 @@ if __name__ == '__main__':
     acceso = acces()
 
     if acceso is not None:
-        main(acceso)
+        liveTrader(acceso)
 
