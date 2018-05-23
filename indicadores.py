@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np 
 from ta import *
 
-import matplotlib.pyplot as plt 
-import matplotlib.dates as mdates
+
 from config import config
 
 import seaborn as sns
