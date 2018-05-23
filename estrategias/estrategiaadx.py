@@ -69,6 +69,7 @@ class EstrategiaAdx(BaseStrategy):
         dfProfit[nombre] = capital/dfProfit['compras']
         dfProfit['cantidadBTC'] = dfProfit[nombre] * dfProfit['ventas']
         dfProfit['porcentajeBTC'] = ((dfProfit['cantidadBTC']*100) / capital)- 100
+        print(dfProfit['porcentajeBTC'])
         dfProfit['cumsumPorcentaje'] = dfProfit['porcentajeBTC'].cumsum()
         dfProfit['gananciasBTC'] = dfProfit['cantidadBTC'] - capital 
         dfProfit['acumuladoGanancias'] = dfProfit['gananciasBTC'].cumsum()

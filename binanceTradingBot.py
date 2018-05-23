@@ -18,7 +18,7 @@ cuenta = BinanceAccount()
 trader = BinanceTrader()
 monedas = config['monedas']
 scheduler = BlockingScheduler()
-
+posicion = config['posicion'] 
 intervalo =  config['interval']
 intervals =config['cron_intervals']
 crontrigger = intervals[intervalo]
@@ -38,8 +38,8 @@ def acces():
         capitalSTR = cuenta.capital()
         capitalINT = float(capitalSTR)
         cliente = cuenta.client
-        posicion = capitalINT / len(monedas)
-        print('\n\n Su posicion optima es : {optima} BTC por trade'.format(optima = posicion))
+        
+        print('\n\n Su posicion es : {optima} BTC por trade'.format(optima = posicion ))
         print('Esperando para iniciar ')
         time.sleep(0.5)
         return cliente
@@ -54,43 +54,59 @@ def liveTrader(cliente):
     
     for moneda in monedas:
         datos = feeder.get_candle(moneda)
-        datos = datos.shift(-1)
+        #datos = datos.shift(-1)
+
         capital = cuenta.capital()
-        
+        #print(capital)
+        pos =  posicion
         cliente = cuenta.client
-        posicion = capital / len(monedas)
+        
         
         analizados =  estrategia.PDI_NDI_Cossover(datos)
-        #print(analizados)
+        #print(analizados[['O','H','L','C','PDI','NDI','signal']])
         señal = estrategia.message(analizados)
 
-        price = analizados['C'].iloc[-1]
+        price = analizados['C'].iloc[-2]
         
-        valorMoneda = trader.equivalent(posicion,price)
-        
-        inTheMarket= trader.in_the_market(moneda,posicion)
-        print(inTheMarket)
-        print(señal)
+        valorMoneda = trader.equivalent(pos,price)
+        inTheMarket= trader.in_the_market(moneda,pos,price)
+        #print(inTheMarket,'inTheMarket')
+        #print(señal,'signal')
+        print(analizados.index[-1])
         if (señal == 1) & (inTheMarket==0) :
             
             
             
             try:
-                print('Se compraron {cantidad} {coin} a {precio}'.format(
-                    cantidad = valorMoneda, coin = moneda, precio=price))
+
+                msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
+                print(msg)
+                print(analizados.index[-1])
                 compra = trader.market_buy(moneda,valorMoneda)
+                trader.send_email(msg)
             except Exception as e:
-                print(e.message)
+                print(e)
 
         elif (señal == -1) & (inTheMarket == 1 ):
 
            
             try:
-                print('Se vendieron {cantidad} {coin} a {precio}'.format(
-                    cantidad = valorMoneda, coin = moneda, precio = price))
-                venta = trader.market_sell(moneda,valorMoneda)
+                info = cliente.get_asset_balance(asset=moneda)
+                cantidad  =info['free']
+                float_cantidad = int(float(cantidad) * 10**2) / 10.0**2
+                #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
+                venta = trader.market_sell(moneda,float_cantidad)
+
+                msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(price)
+                print(msg)
+                print(analizados.index[-1])
+                trader.send_email(msg)
+                
+                #print('Se vendieron {cantidad} {coin} a {precio}'.format(
+                #  cantidad = float_cantidad, coin = moneda, precio = price))
+
             except Exception as e:
-                print(e.message)
+                print(e)
             
 
         else:
@@ -104,7 +120,7 @@ def liveTrader(cliente):
 def main(acceso):
     """Funcion para ejecutar una orden cada intervalo
     """
-
+    liveTrader(acceso)
     scheduler.add_job(liveTrader, trigger='cron',
                           minute=crontrigger, args=[acceso])
     scheduler.start()
@@ -114,5 +130,5 @@ if __name__ == '__main__':
     acceso = acces()
 
     if acceso is not None:
-        liveTrader(acceso)
+        main(acceso)
 

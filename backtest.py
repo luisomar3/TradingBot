@@ -14,7 +14,7 @@ def Backtest():
     velas = feeder.get_candle(moneda)
     #velas = velas.shift(-1)
     analizados = adx.PDI_NDI_Cossover(velas)
-    print(analizados[['O','H','L','C','V','PDI','NDI']].to_string())
+    #print(analizados[['O','H','L','C','V','PDI','NDI']].to_string())
 
     promedio = adx.plot_and_stats(analizados,moneda,plot = True,historico = False)
 

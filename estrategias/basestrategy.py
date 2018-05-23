@@ -18,8 +18,8 @@ class BaseStrategy():
 
         """
         
-        order  =  dataFrame.tail(1)
-
+        order  =  dataFrame.iloc[-1]
+        
         return order
 
     def message(self,dataFrame):
@@ -30,7 +30,7 @@ class BaseStrategy():
 
         señal =  self.__strategySignal(data)
 
-        item = int(señal['signal'].values)
+        item = int(señal['signal'])
         
         return item
 
