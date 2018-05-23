@@ -4,21 +4,21 @@ config = {
 
     "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
 
-    "ventana" : 6,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :     14,  #Cantidad de dias con que se hara el promedio movil
     
     "monedaSimulacion": 'BNB',  #moneda para simular y graficar ganancias.
 
-    "fechaInicio" : "1 Jan, 2018",
+    "fechaInicio" : "1 May, 2018",
    
     "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
-    "capitalSimulacion" : 0.001, #Posicion a invertir para la optimizacion del portafolio
+    "capitalSimulacion" : 0.0005, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
     'monedas': ['BNB'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'interval' : '4h', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
+    'interval' : '1h', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
 
     'posicion' : 0.001,  # posicion
     
