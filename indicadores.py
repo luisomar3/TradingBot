@@ -5,9 +5,6 @@ from ta import *
 
 from config import config
 
-import seaborn as sns
-sns.set()
-sns.axes_style('darkgrid')
 
 window = config['ventana']
 
