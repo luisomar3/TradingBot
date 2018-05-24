@@ -99,23 +99,23 @@ class EstrategiaAdx(BaseStrategy):
          
         
         if plot == True:
-            f2, ax2 = plt.subplots(nrows =2,ncols=1,figsize = (8,4),sharex=True)
+            f2, ax2 = plt.subplots(nrows =1,ncols=1,figsize = (8,4),sharex=True)
             f2.suptitle(mercado)
-            ax2[0].plot(data.index, data['C'], color = 'black', lw=2, label='Close')
+            ax2.plot(data.index, data['C'], color = 'black', label='Close')
             #ax2[0].plot(data.index, data['emaC'], color = 'red', lw =3, label = "Ema window ")
 
-            ax2[1].plot(data.index, data['PDI'], color='green', lw=1,label='PDI')
-            ax2[1].plot(data.index, data['NDI'], color='red', lw=1, label='NDI')
-            ax2[1].plot(data.index, data['ADX'], color = 'gray', alpha=0.5, label='ADX')          
+            # ax2[1].plot(data.index, data['PDI'], color='green', lw=1,label='PDI')
+            # ax2[1].plot(data.index, data['NDI'], color='red', lw=1, label='NDI')
+            # ax2[1].plot(data.index, data['ADX'], color = 'gray', alpha=0.5, label='ADX')          
             
 
             #print(venta)
-            ax2[0].plot(compra.index, compra['C'], 'go--', linewidth=0.01, markersize=5,label = 'COMPRA')
-            ax2[0].plot(venta.index, venta['C'], 'ro--', linewidth=0.01, markersize=5,label = 'VENTA')
+            ax2.plot(compra.index, compra['C'], 'go--', linewidth=0.01, markersize=5,label = 'COMPRA')
+            ax2.plot(venta.index, venta['C'], 'ro--', linewidth=0.01, markersize=5,label = 'VENTA')
             
 
-            ax2[0].legend(loc = 'upper left')
-            ax2[1].legend(loc = 'upper left')
+            ax2.legend(loc = 'upper left')
+           
 
             plt.gcf().autofmt_xdate()
             
