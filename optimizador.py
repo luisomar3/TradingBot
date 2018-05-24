@@ -4,6 +4,7 @@ import numpy as np
 from feeders.binanceFeeder import BinanceFeeder
 from estrategias.estrategiaadx import EstrategiaAdx
 from config import config
+umbral = config['umbralOptimizador']
 
 #moneda = config['monedaSimulacion']
 feeder = BinanceFeeder()
@@ -25,13 +26,14 @@ def Backtest():
 
             promedio = adx.plot_and_stats(analizados,moneda,plot = False,historico = False)
             print(moneda,promedio)
-            if promedio['averagePorcentaje'] > 2 :
+            
+            if promedio['porcentajeAcumulado'] > umbral :
                 portafolio.append(moneda)
         
     except Exception as e :
         print('Error analizando {coin}'.format(coin=moneda))    
         
-    print('Las siguientes monedas presentan ganancia promedio > a 2% ',portafolio)
+    print('Las siguientes monedas presentan ganancia promedio > a {u}% '.format(u = umbral),portafolio)
 
 if __name__ == '__main__':
     Backtest()

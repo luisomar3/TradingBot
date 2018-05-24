@@ -6,13 +6,15 @@ config = {
 
     "ventana" :     14,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'BNB',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'ETH',  #moneda para simular y graficar ganancias.
+    
+    "umbralOptimizador":50, #umbral para optimizador
 
-    "fechaInicio" : "1 May, 2018",
+    "fechaInicio" : "1 JAN , 2018",
    
     "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
-    "capitalSimulacion" : 0.0005, #Posicion a invertir para la optimizacion del portafolio
+    "capitalSimulacion" : 1, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
@@ -22,7 +24,7 @@ config = {
 
     'interval' : '1',
     
-    'frame' : 'h',
+    'frame' : 'd',
     
     "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10'} ,
     

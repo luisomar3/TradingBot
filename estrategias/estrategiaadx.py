@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np 
 
 import time
-
+from time import gmtime, strftime
 from config import config
 from estrategias.basestrategy import BaseStrategy
 from indicadores import *
@@ -69,13 +69,15 @@ class EstrategiaAdx(BaseStrategy):
         dfProfit[nombre] = capital/dfProfit['compras']
         dfProfit['cantidadBTC'] = dfProfit[nombre] * dfProfit['ventas']
         dfProfit['porcentajeBTC'] = ((dfProfit['cantidadBTC']*100) / capital)- 100
-        print(dfProfit['porcentajeBTC'])
+        dfProfit['porcentajeBTC']
         dfProfit['cumsumPorcentaje'] = dfProfit['porcentajeBTC'].cumsum()
         dfProfit['gananciasBTC'] = dfProfit['cantidadBTC'] - capital 
         dfProfit['acumuladoGanancias'] = dfProfit['gananciasBTC'].cumsum()
         #dfProfit['monedaTotal'] = (dfProfit['ventasMoneda']-dfProfit['comprasMoneda'])
         dfProfit['cumsum'] = dfProfit['total'].cumsum()
-        
+        fecha = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        path = 'Backtest/' +moneda + '-' + fecha +  '.csv'
+        dfProfit.to_csv(path, sep = ',')
         #dfProfit['cumsumCapital'] = dfProfit['monedaTotal'].cumsum()
         
         if historico == True:
@@ -87,13 +89,16 @@ class EstrategiaAdx(BaseStrategy):
         averagePorcentaje = dfProfit['porcentajeBTC'].mean()
         maximaGanancia = dfProfit['gananciasBTC'].max()
         maximaPerdida = dfProfit['gananciasBTC'].min()
+        porcentajeAcumulado = dfProfit['cumsumPorcentaje'].iloc[-1]
         
         averages = {
+
             'averageGanancias':averageGanancias,
             'averagePorcentaje':averagePorcentaje,
             'maximaGanancia':maximaGanancia,
             'maximaPerdida':maximaPerdida,
-            'numeroDeOperaciones':numeroOperaciones
+            'numeroDeOperaciones':numeroOperaciones,
+            'porcentajeAcumulado' : porcentajeAcumulado
             
             }
          

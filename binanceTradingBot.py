@@ -73,7 +73,7 @@ def liveTrader(cliente):
         inTheMarket= trader.in_the_market(moneda,pos,price)
         #print(inTheMarket,'inTheMarket')
         #print(señal,'signal')
-        print(analizados.index[-1])
+        print(analizados)
         if (señal == 1) & (inTheMarket==0) :
             
             

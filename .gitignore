@@ -3,5 +3,6 @@
 myvenv
 .vscode
 private
+Backtest
 credentials.txt
 __pycache__
