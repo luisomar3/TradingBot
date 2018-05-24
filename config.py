@@ -18,11 +18,13 @@ config = {
 
     'monedas': ['BNB'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'interval' : '1h', #Los intervalos disponibles son : 1d 1h 1M (month) 30m etc.+
-
     'posicion' : 0.001,  # posicion
+
+    'interval' : '1',
     
-    "cron_intervals" : {'1m':'*/1',"1h": "*/1", "2h": "*/2", '3h' : '*/3','4h':'*/4', '5h': '*/5', '6h':'*/6','1d':'d'} ,
+    'frame' : 'h',
+    
+    "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10'} ,
     
     "email": "luisomar242@gmail.com",
 

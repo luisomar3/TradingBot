@@ -10,7 +10,9 @@ from config import config
 inicio = config['fechaInicio']
 final = config['fechaFinal']
 base = config['MonedaBase']
-intervalo = config['interval']
+number = config['interval']
+frame = config['frame']
+intervalo = number + frame
 client = Client('','')
 
 class BinanceFeeder(DataFeeder):

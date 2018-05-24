@@ -104,9 +104,9 @@ class EstrategiaAdx(BaseStrategy):
             ax2[0].plot(data.index, data['C'], color = 'black', lw=2, label='Close')
             #ax2[0].plot(data.index, data['emaC'], color = 'red', lw =3, label = "Ema window ")
 
-            ax2[1].plot(data.index, data['PDI'], color='green', lw=1,label='PDI')
-            ax2[1].plot(data.index, data['NDI'], color='red', lw=1, label='NDI')
-            ax2[1].plot(data.index, data['ADX'], color = 'gray', alpha=0.5, label='ADX')          
+            #ax2[1].plot(data.index, data['PDI'], color='green', lw=1,label='PDI')
+            #ax2[1].plot(data.index, data['NDI'], color='red', lw=1, label='NDI')
+            #ax2[1].plot(data.index, data['ADX'], color = 'gray', alpha=0.5, label='ADX')          
             
 
             #print(venta)

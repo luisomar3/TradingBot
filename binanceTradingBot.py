@@ -21,6 +21,7 @@ scheduler = BlockingScheduler()
 posicion = config['posicion'] 
 intervalo =  config['interval']
 intervals =config['cron_intervals']
+frame = config['frame']
 crontrigger = intervals[intervalo]
 
 
@@ -121,9 +122,18 @@ def main(acceso):
     """Funcion para ejecutar una orden cada intervalo
     """
     liveTrader(acceso)
-    scheduler.add_job(liveTrader, trigger='cron',
-                          minute=crontrigger, args=[acceso])
-    scheduler.start()
+    if frame == 'm':
+        scheduler.add_job(liveTrader, trigger='cron',
+                            minute=crontrigger, args=[acceso])
+        print('Revisando señal cada {min} minuto'.format(min = intervalo))
+        scheduler.start()
+       
+    elif frame == 'h': 
+        scheduler.add_job(liveTrader, trigger='cron',
+                            hour=crontrigger, args=[acceso])
+        print('Revisando señal cada {min} hora'.format(min = intervalo))
+        scheduler.start()
+        
 
 if __name__ == '__main__':
     
