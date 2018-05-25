@@ -89,7 +89,11 @@ class EstrategiaAdx(BaseStrategy):
         averagePorcentaje = dfProfit['porcentajeBTC'].mean()
         maximaGanancia = dfProfit['gananciasBTC'].max()
         maximaPerdida = dfProfit['gananciasBTC'].min()
-        porcentajeAcumulado = dfProfit['cumsumPorcentaje'].iloc[-1]
+        if np.isnan(dfProfit['cumsumPorcentaje'].iloc[-1]) == True:
+
+            porcentajeAcumulado = dfProfit['cumsumPorcentaje'].iloc[-2]
+        else:
+            porcentajeAcumulado = dfProfit['cumsumPorcentaje'].iloc[-1]
         
         averages = {
 
