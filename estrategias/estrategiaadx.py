@@ -63,7 +63,7 @@ class EstrategiaAdx(BaseStrategy):
         
         dfProfit = pd.DataFrame()
         dfProfit = pd.concat([df_compras,df_ventas],ignore_index = False, axis = 1)
-        print(dfProfit)
+        
         dfProfit['total'] = (dfProfit['ventas']-dfProfit['compras'])
         nombre = 'cantidad'+moneda
         dfProfit[nombre] = capital/dfProfit['compras']
@@ -77,12 +77,13 @@ class EstrategiaAdx(BaseStrategy):
         dfProfit['cumsum'] = dfProfit['total'].cumsum()
         fecha = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         path = 'Backtest/' +moneda + '-' + fecha +  '.csv'
+        dfProfit.dropna(inplace = True) 
         dfProfit.to_csv(path, sep = ',')
         #dfProfit['cumsumCapital'] = dfProfit['monedaTotal'].cumsum()
         
         if historico == True:
-            print(dfProfit[['compras',nombre,'ventas','porcentajeBTC','datetime','cumsumPorcentaje','gananciasBTC','acumuladoGanancias']].to_string())
-            
+            print(dfProfit[['compras',nombre,'ventas','porcentajeBTC','datetime','cumsumPorcentaje','gananciasBTC','acumuladoGanancias']])
+            pass
         numeroOperaciones = int((len(compra) + len(venta))/2)
         
         averageGanancias = dfProfit['gananciasBTC'].mean()

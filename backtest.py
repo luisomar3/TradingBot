@@ -15,8 +15,8 @@ def Backtest():
     #velas = velas.shift(-1)
     analizados = adx.PDI_NDI_Cossover(velas)
     #print(analizados[['O','H','L','C','V','PDI','NDI']].to_string())
-
-    promedio = adx.plot_and_stats(analizados,moneda,plot = True,historico = False)
+    #print(analizados['signal'])
+    promedio = adx.plot_and_stats(analizados,moneda,plot = True,historico = True)
 
     print(promedio)
 
