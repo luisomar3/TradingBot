@@ -12,6 +12,7 @@ final = config['fechaFinal']
 base = config['MonedaBase']
 number = config['interval']
 frame = config['frame']
+mode = config['modo']
 intervalo = number+frame
 client = Client('','')
 
@@ -21,18 +22,21 @@ class BinanceFeeder(DataFeeder):
         
 
     def get_candle(self,coin):
-
-        # mercado = coin + base
-        # klines = pd.DataFrame(client.get_klines(symbol = mercado, interval = intervalo),
-        # columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
-        #Arreglo especifico de exchange
-
-        mercado = coin + base
-        klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,inicio,final),
+        if mode == 1:
+            mercado = coin + base
+            klines = pd.DataFrame(client.get_historical_klines(mercado,intervalo,inicio,final),
                 columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
-        
+        elif mode == 2 :
+            
+            mercado = coin + base
+            klines = pd.DataFrame(client.get_klines(symbol = mercado, interval = intervalo),
+            columns = ("datetime","O","H","L","C","V","x","x","x","x","x","x") ) 
+            #Arreglo especifico de exchange
+
+
         columnsName = klines.columns.values.tolist()
         candles = self.normalizeKlines(klines,columnsName)
+        candles = candles.set_index(candles.index - pd.Timedelta(2, unit =  'h'))
         return candles
 
     def get_orders(self,coin):

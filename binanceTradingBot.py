@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np 
 import time 
 import tqdm
-
+import datetime
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from estrategias.estrategiaadx import   EstrategiaAdx
@@ -73,7 +73,7 @@ def liveTrader(cliente):
         inTheMarket= trader.in_the_market(moneda,pos,price)
         #print(inTheMarket,'inTheMarket')
         #print(señal,'signal')
-        print(analizados)
+        #print(analizados['signal'].to_string())
         if (señal == 1) & (inTheMarket==0) :
             
             
@@ -82,7 +82,7 @@ def liveTrader(cliente):
 
                 msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
                 print(msg)
-                print(analizados.index[-1])
+                #print(analizados.index[-1])
                 compra = trader.market_buy(moneda,valorMoneda)
                 trader.send_email(msg)
             except Exception as e:
@@ -100,7 +100,7 @@ def liveTrader(cliente):
 
                 msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(price)
                 print(msg)
-                print(analizados.index[-1])
+                #print(analizados.index[-1])
                 trader.send_email(msg)
                 
                 #print('Se vendieron {cantidad} {coin} a {precio}'.format(

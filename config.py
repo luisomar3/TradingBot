@@ -8,21 +8,23 @@ config = {
     
     "monedaSimulacion": 'ETH',  #moneda para simular y graficar ganancias.
     
-    "umbralOptimizador":50, #umbral para optimizador
+    "umbralOptimizador":10, #umbral para optimizador
 
-    "fechaInicio" : "1 JAN , 2018",
+    "modo" : 2,  # 1 para simulacion, 2 para bot
+
+    "fechaInicio" : "21 May , 2018",
    
     "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
-    "capitalSimulacion" : 1, #Posicion a invertir para la optimizacion del portafolio
+    "capitalSimulacion" : 0.0026, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['BNB'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'posicion' : 0.001,  # posicion
+    'posicion' : 0.0025,  # posicion
 
-    'interval' : '1',
+    'interval' : '4',
     
     'frame' : 'h',
     

@@ -105,12 +105,12 @@ class Indicadores():
         data['NS_PDI'] = adx_pos(data['H'],data['L'],data['C'], n = window, fillna = False)
         
         data['PDI'] = data['NS_PDI'].shift() - (data['NS_PDI'].shift()/window) + data['NS_PDI']
-        data['PDI'] = data['PDI'].shift(-1)
+        #data['PDI'] = data['PDI'].shift(-1)
         
         data['NS_NDI'] = adx_neg(data['H'],data['L'],data['C'], n = window, fillna = False) 
         
         data['NDI'] = data['NS_NDI'].shift() - (data['NS_NDI'].shift()/window) + data['NS_NDI']
-        data['NDI'] = data['NDI'].shift(-1)
+        #data['NDI'] = data['NDI'].shift(-1)
         
         data['shift_PDI'] = data['PDI'].shift()
         data['shift_NDI'] = data['NDI'].shift()
