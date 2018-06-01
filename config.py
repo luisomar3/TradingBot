@@ -1,10 +1,10 @@
 config = {
 
-    "api_key":'AIc1YLwGtRDJzy4wpMRe7CcAUBxTMIIfT1ddhQOhTJbHRP2xqhMkIyt5EABHLPZt',
+    "api_key":'QHvkyX9fCPQ6P68nXyTSLqRaLkjtd3mul2PTJ7neiSoWDeceUSrfOUE9apMSVUFc',
 
-    "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
+    "secret_key":"nKsPGSiU5vXyLWbQk9KmxCfxmRtPjKjiS2xwnFs3E9xDzfDElHZQbc7yWVR6fYQu",
 
-    "ventana" :     14,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :     6,  #Cantidad de dias con que se hara el promedio movil
     
     "monedaSimulacion": 'ETH',  #moneda para simular y graficar ganancias.
     
@@ -20,13 +20,13 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['ETH','WPR','STORJ','GNT','MANA','DLT',],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'posicion' : 0.0025,  # posicion
+    'posicion' : 0.005,  # posicion
 
-    'interval' : '4',
+    'interval' : '5',
     
-    'frame' : 'h',
+    'frame' : 'm',
     
     "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10'} ,
     
