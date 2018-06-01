@@ -36,7 +36,7 @@ class BinanceFeeder(DataFeeder):
 
         columnsName = klines.columns.values.tolist()
         candles = self.normalizeKlines(klines,columnsName)
-        candles = candles.set_index(candles.index - pd.Timedelta(2, unit =  'h'))
+        #candles = candles.set_index(candles.index - pd.Timedelta(2, unit =  'h'))
         return candles
 
     def get_orders(self,coin):
