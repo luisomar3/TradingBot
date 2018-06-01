@@ -65,16 +65,16 @@ def liveTrader(cliente):
         
         analizados =  estrategia.PDI_NDI_Cossover(datos)
         #print(analizados[['O','H','L','C','PDI','NDI','signal']])
-        señal = estrategia.message(analizados)
+        senal = estrategia.message(analizados)
 
         price = analizados['C'].iloc[-2]
         
         valorMoneda = trader.equivalent(pos,price)
         inTheMarket= trader.in_the_market(moneda,pos,price)
         #print(inTheMarket,'inTheMarket')
-        #print(señal,'signal')
+        #print(senal,'signal')
         #print(analizados['signal'].to_string())
-        if (señal == 1) & (inTheMarket==0) :
+        if (senal == 1) & (inTheMarket==0) :
             
             
             
@@ -88,7 +88,7 @@ def liveTrader(cliente):
             except Exception as e:
                 print(e)
 
-        elif (señal == -1) & (inTheMarket == 1 ):
+        elif (senal == -1) & (inTheMarket == 1 ):
 
            
             try:
@@ -111,7 +111,7 @@ def liveTrader(cliente):
             
 
         else:
-            print('Esperando Señal para {coin}'.format(coin = moneda))
+            print('Esperando senal para {coin}'.format(coin = moneda))
 
 
 
@@ -125,13 +125,13 @@ def main(acceso):
     if frame == 'm':
         scheduler.add_job(liveTrader, trigger='cron',
                             minute=crontrigger, args=[acceso])
-        print('Revisando señal cada {min} minuto'.format(min = intervalo))
+        print('Revisando senal cada {min} minuto'.format(min = intervalo))
         scheduler.start()
        
     elif frame == 'h': 
         scheduler.add_job(liveTrader, trigger='cron',
                             hour=crontrigger, args=[acceso])
-        print('Revisando señal cada {min} hora'.format(min = intervalo))
+        print('Revisando senal cada {min} hora'.format(min = intervalo))
         scheduler.start()
         
 
