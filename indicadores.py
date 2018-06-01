@@ -1,5 +1,6 @@
 import pandas as pd 
 import numpy as np 
+from ta import *
 
 import matplotlib.pyplot as plt 
 import matplotlib.dates as mdates
@@ -9,7 +10,7 @@ import seaborn as sns
 sns.set()
 sns.axes_style('darkgrid')
 
-window = config['adx_window']
+window = config['ventana']
 
 class Indicadores():
     """Esta clase contiene todos los indicadores disponibles en el sistema. Seran pasados
@@ -82,8 +83,16 @@ class Indicadores():
         dfHelper['CL-PC'] = abs(dfHelper['L'] - dfHelper['PC'])
 
         dfHelper['TR'] = dfHelper[['CH-CL','CH-PC','CL-PC']].max(axis=1)
-        datos['ATR'] = self.promedioMovilExponcial(dfHelper['TR'],window)
+        datos['TR'] = dfHelper['TR']
+        datos['shiftedTR'] = datos['TR'].shift(1)
 
+        datos['smoothedTR'] = datos['shiftedTR'] - (datos['shiftedTR']/window) + datos['TR']
+
+        
+
+        datos['ATR'] = self.promedioMovilExponcial(dfHelper['TR'],window)
+        datos['ATR2'] = datos['smoothedTR'].rolling(14).mean()
+        #datos['ATR3'] = dfHelper['TR'].ewm(span=window,adjust = False).mean()
        
         
         return datos
@@ -91,57 +100,19 @@ class Indicadores():
     def ADX(self,data):
         """Indicador ADX
         """
-        dfHelper = data.copy()
-        dfHelper = self.calcularDM(dfHelper)
-        dfHelper = self.ATR(dfHelper)
-
-        emaPDM = self.promedioMovilExponcial(dfHelper['PDM'],window)
-        emaNDM = self.promedioMovilExponcial(dfHelper['NDM'],window)
         
-        data['PDI'] = 100 * ( emaPDM / dfHelper['ATR'])
-        #Calcular el indice positivo
-        data['NDI'] = 100 * ( emaNDM / dfHelper['ATR'])
-        #calcular el indice negativo
-
-        data['shift_PDI'] = data['PDI'].shift(1)
-        #creamos una columna con fecha pasada para evaluar el crossover
-        data['shift_NDI'] = data['NDI'].shift(1)
+        data['ADX'] = adx(data['H'],data['L'],data['C'], n = window, fillna = False )  
+        data['NS_PDI'] = adx_pos(data['H'],data['L'],data['C'], n = window, fillna = False)
         
+        data['PDI'] = data['NS_PDI'].shift() - (data['NS_PDI'].shift()/window) + data['NS_PDI']
+        #data['PDI'] = data['PDI'].shift(-1)
         
-        terminoDividendo= abs(data['PDI']-data['NDI'])
-        terminoDivisor = data['PDI'] + data['NDI']
-
-     
+        data['NS_NDI'] = adx_neg(data['H'],data['L'],data['C'], n = window, fillna = False) 
         
-        dfHelper['dx_calculation'] = 100 * ( terminoDividendo / terminoDivisor)
-
-      
-
-        data['ADX'] = self.promedioMovilExponcial(dfHelper['dx_calculation'],window)
-        data['emaC'] = self.promedioMovilExponcial(data['C'],window)
-
-       
-
-        f2, ax2 = plt.subplots(nrows =2,ncols=1,figsize = (8,4),sharex=True)
-        f2.suptitle("ETH-BTC Pair")
-        ax2[0].plot(data.index, data['C'], color = 'black', lw=2, label='Close')
-        ax2[0].plot(data.index, data['emaC'], color = 'red', lw =3, label = "Ema window ")
-
-        ax2[1].plot(data.index, data['PDI'], color='green', lw=1,label='PDI')
-        ax2[1].plot(data.index, data['NDI'], color='red', lw=1, label='NDI')
-        ax2[1].plot(data.index, data['ADX'], color = 'gray', alpha=0.5, label='ADX')          
+        data['NDI'] = data['NS_NDI'].shift() - (data['NS_NDI'].shift()/window) + data['NS_NDI']
+        #data['NDI'] = data['NDI'].shift(-1)
         
-        
-        ax2[0].legend(loc = 'upper left')
-        ax2[1].legend(loc = 'upper left')
-        plt.gcf().autofmt_xdate()
-        
-        
-        plt.show()
-
-        # plt.plot(resultados.index, resultados['cumsum'])
-        # plt.gcf().autofmt_xdate()
-        # plt.show()
-
+        data['shift_PDI'] = data['PDI'].shift()
+        data['shift_NDI'] = data['NDI'].shift()
         return data
 
