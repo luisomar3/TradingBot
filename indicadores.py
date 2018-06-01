@@ -6,9 +6,9 @@ from ta import *
 #import matplotlib.dates as mdates
 from config import config
 
-import seaborn as sns
-sns.set()
-sns.axes_style('darkgrid')
+# import seaborn as sns
+# sns.set()
+# sns.axes_style('darkgrid')
 
 window = config['ventana']
 
