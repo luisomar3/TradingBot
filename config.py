@@ -20,7 +20,7 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['ETH','WPR','STORJ','GNT','MANA','DLT',],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.005,  # posicion
 

@@ -71,8 +71,8 @@ def liveTrader(cliente):
         
         valorMoneda = trader.equivalent(pos,price)
         inTheMarket= trader.in_the_market(moneda,pos,price)
-        #print(inTheMarket,'inTheMarket')
-        #print(senal,'signal')
+        print(inTheMarket,'inTheMarket')
+        print(senal,'signal')
         print(analizados['signal'].tail(5))
         if (senal == 1) & (inTheMarket==0) :
             
