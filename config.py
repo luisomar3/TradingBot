@@ -1,16 +1,20 @@
 config = {
 
-    "api_key":'QHvkyX9fCPQ6P68nXyTSLqRaLkjtd3mul2PTJ7neiSoWDeceUSrfOUE9apMSVUFc',
+    #"api_key":'QHvkyX9fCPQ6P68nXyTSLqRaLkjtd3mul2PTJ7neiSoWDeceUSrfOUE9apMSVUFc',
 
-    "secret_key":"nKsPGSiU5vXyLWbQk9KmxCfxmRtPjKjiS2xwnFs3E9xDzfDElHZQbc7yWVR6fYQu",
+    #"secret_key":"nKsPGSiU5vXyLWbQk9KmxCfxmRtPjKjiS2xwnFs3E9xDzfDElHZQbc7yWVR6fYQu",
+    
+    "api_key":'AIc1YLwGtRDJzy4wpMRe7CcAUBxTMIIfT1ddhQOhTJbHRP2xqhMkIyt5EABHLPZt',
 
+    "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
+    
     "ventana" :     6,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'ETH',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'DLT',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":10, #umbral para optimizador
 
-    "modo" : 2,  # 1 para simulacion, 2 para bot
+    "modo" : 2	,  # 1 para simulacion, 2 para bot
 
     "fechaInicio" : "21 May , 2018",
    
@@ -22,9 +26,9 @@ config = {
 
     'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'posicion' : 0.005,  # posicion
+    'posicion' : 0.001,  # posicion
 
-    'interval' : '5',
+    'interval' : '1',
     
     'frame' : 'm',
     

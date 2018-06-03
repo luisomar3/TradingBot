@@ -69,21 +69,23 @@ def liveTrader(cliente):
 
         price = analizados['C'].iloc[-2]
         
-        valorMoneda = trader.equivalent(pos,price)
+        valorMoneda = trader.equivalent(moneda,pos,price)
         inTheMarket= trader.in_the_market(moneda,pos,price)
         print(inTheMarket,'inTheMarket')
         print(senal,'signal')
         print(analizados['signal'].tail(5))
+        
         if (senal == 1) & (inTheMarket==0) :
             
             
             
             try:
 
-                msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
-                print(msg)
+
                 #print(analizados.index[-1])
                 compra = trader.market_buy(moneda,valorMoneda)
+                msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
+                print(msg)
                 trader.send_email(msg)
             except Exception as e:
                 print(e)
@@ -97,7 +99,7 @@ def liveTrader(cliente):
                 float_cantidad = int(float(cantidad) * 10**2) / 10.0**2
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
                 venta = trader.market_sell(moneda,float_cantidad)
-
+                print(venta)
                 msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(price)
                 print(msg)
                 #print(analizados.index[-1])

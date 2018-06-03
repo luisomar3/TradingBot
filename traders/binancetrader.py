@@ -42,13 +42,28 @@ class BinanceTrader(BaseTrader):
 
         return 'placed'
 
-    def equivalent(self,posicion,price):
+    def equivalent(self,moneda,posicion,price):
         """Metodo para calcular el equivalente en MONEDA de X cantidad de BTC
         """
-        equivlalente = round(posicion/price,2)
-
+        mercado = moneda+monedaBase
+        decimales  = self.decimales(moneda)
+        equivlalente = round(posicion/price,decimales)
+        if decimales == 0 :
+            equivlalente = int(equivlalente)
+        
+        #print(equivlalente)
         return  equivlalente
 
+    def decimales(self,moneda):
+        mercado = moneda + monedaBase
+        info = client.get_symbol_info(mercado)
+       
+        filters = info['filters']
+        stepSize = filters[1]['stepSize']
+        noComa = stepSize.replace('.','')
+        #print(noComa)
+        #print(noComa.find('1'))
+        return noComa.find('1')
     def market_buy(self,moneda,cantidad):
         """Metodo para  realizar un market buy
         """
@@ -69,7 +84,9 @@ class BinanceTrader(BaseTrader):
         """
         infoActivo = client.get_asset_balance(moneda)
         comprado = float(infoActivo['free'])
-        if comprado > self.equivalent(posicion,price) :
+        porComprar = self.equivalent(moneda,posicion,price) 
+        porComprarPor = porComprar - (porComprar*0.2)
+        if comprado >= porComprarPor:
             inTheMarket = 1  # Verifico que la posicion sea mayor al monto q poseo en esa moneda.
         else:
             inTheMarket = 0
