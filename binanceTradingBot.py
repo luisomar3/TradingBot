@@ -74,7 +74,7 @@ def liveTrader(cliente):
         print(inTheMarket,'inTheMarket')
         print(senal,'signal')
         print(analizados['signal'].tail(5))
-        
+
         if (senal == 1) & (inTheMarket==0) :
             
             
@@ -96,7 +96,11 @@ def liveTrader(cliente):
             try:
                 info = cliente.get_asset_balance(asset=moneda)
                 cantidad  =info['free']
-                float_cantidad = int(float(cantidad) * 10**2) / 10.0**2
+                decimal = trader.decimales(moneda)
+                if decimal == 0:
+                    float_cantidad = int(float(cantidad))
+                else:
+                    float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
                 venta = trader.market_sell(moneda,float_cantidad)
                 print(venta)
