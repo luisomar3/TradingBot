@@ -19,8 +19,9 @@ class BaseStrategy():
         """
         
         order  =  dataFrame.iloc[-1]
+        order2 = dataFrame.iloc[-2]
         
-        return order
+        return order,order2
 
     def message(self,dataFrame):
         """ Metodo para extraer estadisticas generales de la estrategia.
@@ -28,8 +29,8 @@ class BaseStrategy():
         """
         data = dataFrame.copy()
 
-        señal =  self.__strategySignal(data)
-
+        señal1,señal2 =  self.__strategySignal(data)
+        full_signal = (seña1 or señal2)
         item = int(señal['signal'])
         
         return item

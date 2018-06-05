@@ -10,7 +10,7 @@ config = {
     
     "ventana" :     6,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'DLT',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'XRP',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":10, #umbral para optimizador
 
@@ -28,7 +28,7 @@ config = {
 
     'posicion' : 0.001,  # posicion
 
-    'interval' : '1',
+    'interval' : '5',
     
     'frame' : 'm',
     
