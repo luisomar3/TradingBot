@@ -83,7 +83,7 @@ def liveTrader(cliente):
 
 
                 #print(analizados.index[-1])
-                #compra = trader.market_buy(moneda,valorMoneda)
+                compra = trader.market_buy(moneda,valorMoneda)
                 msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
                 print(msg)
                 trader.send_email(msg)
@@ -102,7 +102,7 @@ def liveTrader(cliente):
                 else:
                     float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
-                #venta = trader.market_sell(moneda,float_cantidad)
+                venta = trader.market_sell(moneda,float_cantidad)
                 print(venta)
                 msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(price)
                 print(msg)
