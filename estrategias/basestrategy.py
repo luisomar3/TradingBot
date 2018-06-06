@@ -30,8 +30,8 @@ class BaseStrategy():
         data = dataFrame.copy()
 
         senal1,senal2 =  self.__strategySignal(data)
-        print(senal1)
-        print(type(senal1))
+        #print(senal1)
+        #print(type(senal1))
         if (senal1 == 1) &  (senal2 == -1) : 
             item = senal1
         elif (senal1 == -1) & (senal2 == 1) : 
