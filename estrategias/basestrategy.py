@@ -18,8 +18,8 @@ class BaseStrategy():
 
         """
         
-        order  =  dataFrame.iloc[-1]
-        order2 = dataFrame.iloc[-2]
+        order  =  dataFrame['signal'].iloc[-1]
+        order2 = dataFrame['signal'].iloc[-2]
         
         return order,order2
 
@@ -29,9 +29,15 @@ class BaseStrategy():
         """
         data = dataFrame.copy()
 
-        señal1,señal2 =  self.__strategySignal(data)
-        full_signal = (seña1 or señal2)
-        item = int(señal['signal'])
+        senal1,senal2 =  self.__strategySignal(data)
+        print(senal1)
+        print(type(senal1))
+        if (senal1 == 1) &  (senal2 == -1) : 
+            item = senal1
+        elif (senal1 == -1) & (senal2 == 1) : 
+            item == senal1 
+        else :
+            item = senal1 or senal2
         
         return item
 
