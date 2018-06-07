@@ -4,9 +4,9 @@ config = {
 
     "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
 
-    "ventana" :     14,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :     6,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'ETH',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'NANO',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":10, #umbral para optimizador
 
@@ -28,7 +28,7 @@ config = {
     
     'frame' : 'h',
     
-    "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10'} ,
+    "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10','15':'*/15','30':'*/30'} ,
     
     "email": "luisomar242@gmail.com",
 
