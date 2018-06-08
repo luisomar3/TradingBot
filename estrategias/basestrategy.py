@@ -35,7 +35,7 @@ class BaseStrategy():
         if (senal1 == 1) &  (senal2 == -1) : 
             item = senal1
         elif (senal1 == -1) & (senal2 == 1) : 
-            item == senal1 
+            item = senal1 
         else :
             item = senal1 or senal2
         
