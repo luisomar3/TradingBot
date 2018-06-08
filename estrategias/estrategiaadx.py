@@ -78,7 +78,7 @@ class EstrategiaAdx(BaseStrategy):
         fecha = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         path = 'Backtest/' +moneda + '-' + fecha +  '.csv'
         dfProfit.dropna(inplace = True) 
-        #dfProfit.to_csv(path, sep = ',')
+        dfProfit.to_csv(path, sep = ',')
         #dfProfit['cumsumCapital'] = dfProfit['monedaTotal'].cumsum()
         
         if historico == True:

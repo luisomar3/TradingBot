@@ -16,19 +16,19 @@ config = {
 
     "modo" : 2	,  # 1 para simulacion, 2 para bot
 
-    "fechaInicio" : "21 May , 2018",
+    "fechaInicio" : "1 May , 2018",
    
-    "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
+    "fechaFinal"  : "1 Jun, 2018"	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
     "capitalSimulacion" : 0.0026, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['XRP'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.001,  # posicion
 
-    'interval' : '30',
+    'interval' : '1',
     
     'frame' : 'm',
     
