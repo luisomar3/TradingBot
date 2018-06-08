@@ -10,11 +10,11 @@ config = {
     
     "umbralOptimizador":10, #umbral para optimizador
 
-    "modo" : 2,  # 1 para simulacion, 2 para bot
+    "modo" : 1,  # 1 para simulacion, 2 para bot
 
-    "fechaInicio" : "21 May , 2018",
+    "fechaInicio" : "1 May , 2018",
    
-    "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
+    "fechaFinal"  : "1 Jun, 2018"	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
     "capitalSimulacion" : 0.0026, #Posicion a invertir para la optimizacion del portafolio
     
