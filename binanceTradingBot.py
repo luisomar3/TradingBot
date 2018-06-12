@@ -129,7 +129,7 @@ def main(acceso):
     """
     #liveTrader(acceso)
     if frame == 'm':
-        scheduler.add_job(liveTrader, trigger='cron',second = 30
+        scheduler.add_job(liveTrader, trigger='cron',
                             minute=crontrigger, args=[acceso])
         print('Revisando senal cada {min} minuto'.format(min = intervalo))
         scheduler.start()
