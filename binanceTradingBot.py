@@ -127,9 +127,9 @@ def liveTrader(cliente):
 def main(acceso):
     """Funcion para ejecutar una orden cada intervalo
     """
-    liveTrader(acceso)
+    #liveTrader(acceso)
     if frame == 'm':
-        scheduler.add_job(liveTrader, trigger='cron',
+        scheduler.add_job(liveTrader, trigger='cron',second = 30
                             minute=crontrigger, args=[acceso])
         print('Revisando senal cada {min} minuto'.format(min = intervalo))
         scheduler.start()
