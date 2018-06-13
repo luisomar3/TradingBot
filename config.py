@@ -24,15 +24,15 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['MTH', 'GXS', 'GNT'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['MTH', 'GXS', 'GNT','BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.001,  # posicion
 
-    'interval' : '30',
+    'interval' : '1',
     
     'frame' : 'm',
     
-    "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10','15':'*/15','30':'*/30'} ,
+    "cron_intervals" : {'1':'*/1', "2": "*/1", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10','15':'*/15','30':'*/30'} ,
     
     "email": "luisomar242@gmail.com",
 
