@@ -7,14 +7,14 @@ config = {
     "api_key":'AIc1YLwGtRDJzy4wpMRe7CcAUBxTMIIfT1ddhQOhTJbHRP2xqhMkIyt5EABHLPZt',
 
     "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
+
+    "ventana" :     6,  #Cantidad de dias con que se hara el promedio movil
     
-    "ventana" :     12,  #Cantidad de dias con que se hara el promedio movil
-    
-    "monedaSimulacion": 'GNT',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'NANO',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":40, #umbral para optimizador
 
-    "modo" : 2	,  # 1 para simulacion, 2 para bot
+    "modo" : 1,  # 1 para simulacion, 2 para bot
 
     "fechaInicio" : "1 May , 2018",
    
@@ -30,7 +30,7 @@ config = {
 
     'interval' : '30',
     
-    'frame' : 'm',  
+    'frame' : 'm',
     
     "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10','15':'*/15','30':'*/30'} ,
     
