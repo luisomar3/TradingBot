@@ -18,8 +18,8 @@ class BaseStrategy():
 
         """
         
-        order  =  dataFrame['signal'].iloc[-1]
-        order2 = dataFrame['signal'].iloc[-2]
+        order  =  dataFrame['signal'].iloc[-2]
+        order2 = dataFrame['signal'].iloc[-3]
         
         return order,order2
 
