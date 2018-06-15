@@ -73,10 +73,22 @@ class BinanceFeeder(DataFeeder):
         return soloBTC
 
     def get_best_price(moneda,side):
+    """Funcion para encontrar los mejores precios en el libro de ordenes
+    :param moneda: Moneda a evaluar
+    :type moneda: Str
+
+    :param side: Bid o Ask para la orden.
+    :type side: Str.
+
+    """
         mercado = moneda + base
         order_book = client.get_orderbook_ticker(mercado)
         side  = order_book[side]
-        pd.DataFrame.from_items(zip(side.index, side.values)).T
+        orders = pd.DataFrame.from_items(zip(side.index, side.values)).T
+        orders = orders.apply(pd.to_numeric)
+
+    return orders
+        
 
 
 

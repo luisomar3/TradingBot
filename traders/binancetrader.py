@@ -92,6 +92,32 @@ class BinanceTrader(BaseTrader):
             inTheMarket = 0
 
         return inTheMarket 
+    
+    def limit_buy(self,moneda,cantidad,price):
+        
+        mercado = moneda + monedaBase
+        order = client.order_limit_buy(
+            
+            symbol=mercado,
+            quantity=cantidad,
+            price=price)
+
+        return order
+
+    def limit_sell(self,moneda,cantidad,price):
+        
+        mercado = moneda + monedaBase
+        order = client.order_limit_sell(
+            symbol=mercado,
+            quantity=cantidad,
+            price=precio)
+        return order
+
+    def verify_order(order):
+        pass
+
+
+
 
     def send_email(self,msg):
         """

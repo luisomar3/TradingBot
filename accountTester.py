@@ -29,7 +29,7 @@ def main():
         print(portafolio)
         
         print(account.capital())
-        print(trader.in_the_market('BNB',0.01))
+        print(trader.get_best_price('BNB','bid'))
 
 
 
