@@ -72,6 +72,11 @@ class BinanceFeeder(DataFeeder):
 
         return soloBTC
 
+    def get_best_price(moneda,side):
+        mercado = moneda + base
+        order_book = client.get_orderbook_ticker(mercado)
+        side  = order_book[side]
+        pd.DataFrame.from_items(zip(side.index, side.values)).T
 
 
 
