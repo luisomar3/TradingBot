@@ -140,10 +140,15 @@ def main(acceso):
         scheduler.start()
         
 def run(acceso):
-    
+    indice = 1
     for moneda in monedas:
+        indice = indice+1
+
         thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
         thread.start()
+        if indice == 30 : 
+            time.sleep(5)
+            indice = 1 
 
     
     
