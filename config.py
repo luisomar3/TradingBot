@@ -14,7 +14,7 @@ config = {
     
     "umbralOptimizador":40, #umbral para optimizador
 
-    "modo" : 1,  # 1 para simulacion, 2 para bot
+    "modo" : 2,  # 1 para simulacion, 2 para bot
 
     "fechaInicio" : "1 May , 2018",
    
@@ -24,11 +24,11 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['MTH', 'STORM'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['MTH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.001,  # posicion
 
-    'interval' : '30',
+    'interval' : '1',
     
     'frame' : 'm',
     

@@ -73,9 +73,6 @@ def liveTrader(cliente,moneda):
         
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
-    print(inTheMarket,'inTheMarket')
-    print(senal,'signal')
-    print(analizados['signal'].tail(5))
 
     if (senal == 1) & (inTheMarket==0) :
             
@@ -84,11 +81,11 @@ def liveTrader(cliente,moneda):
         try:
 
 
-            #print(analizados.index[-1])
-            compra = trader.market_buy(moneda,valorMoneda)
+            
+            #compra = trader.market_buy(moneda,valorMoneda)
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
-            print(msg)
             trader.send_email(msg)
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5).to_string())
         except Exception as e:
             print(e)
 
@@ -104,22 +101,22 @@ def liveTrader(cliente,moneda):
             else:
                 float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
-            venta = trader.market_sell(moneda,float_cantidad)
-            print(venta)
+            #venta = trader.market_sell(moneda,float_cantidad)
+            
             msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(price)
-            print(msg)
-            #print(analizados.index[-1])
+        
+            
             trader.send_email(msg)
-                
-            #print('Se vendieron {cantidad} {coin} a {precio}'.format(
-            #  cantidad = float_cantidad, coin = moneda, precio = price))
+
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5).to_string())
 
         except Exception as e:
             print(e)
             
 
     else:
-        print('Esperando senal para {coin}'.format(coin = moneda))
+        print('Esperando senal para {coin}'.format(coin = moneda),
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5).to_string())
 
 
 
