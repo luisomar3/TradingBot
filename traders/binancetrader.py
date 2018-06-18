@@ -114,9 +114,43 @@ class BinanceTrader(BaseTrader):
         return order
 
     def verify_order(order):
-        pass
+
+        if order['status'] == 'Filled':
+            return 1
+        else :
+            return 0
 
 
+    def get_best_price(self,moneda,side,cantidad):
+        """Funcion para encontrar los mejores precios en el libro de ordenes
+        :param moneda: Moneda a evaluar
+        :type moneda: Str
+
+        :param side: Bid o Ask para la orden.
+        :type side: Str.
+
+        """
+        mercado = moneda + monedaBase
+        order_book =client.get_order_book(symbol=mercado)
+
+        side_list  = pd.DataFrame(order_book[side])
+        orders = pd.DataFrame.from_items(zip(side_list.index, side_list.values)).T
+        orders = orders.rename(index=str, columns={0: "prices", 1: "quantity"})
+        orders = orders.drop(columns = 2 ,  axis =1 )
+        orders = orders.apply(pd.to_numeric)
+        orders['sumatoria'] = orders['quantity'].cumsum()
+
+        def mejor_precio(orders,cantidad):
+            porcentaje = cantidad * 1.5
+            for row in orders.itertuples():
+                if row[3]> porcentaje:
+                    return row[1]
+                    break
+ 
+        precio = mejor_precio(orders,cantidad)
+
+        return precio
+        
 
 
     def send_email(self,msg):

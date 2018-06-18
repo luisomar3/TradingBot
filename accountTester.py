@@ -26,10 +26,11 @@ def main():
 
         monedaPrincipal,portafolio = account.portafolio(monedas)
 
-        print(portafolio)
+        #print(portafolio)
         
-        print(account.capital())
-        print(trader.get_best_price('BNB','bid'))
+        #print(account.capital())
+        tests,precios = trader.get_best_price('ETH','bids',1)
+        print(tests,precios)
 
 
 
