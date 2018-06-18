@@ -147,7 +147,7 @@ def run(acceso):
         thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
         thread.start()
         if indice == 30 : 
-            time.sleep(10)
+            time.sleep(30)
             indice = 1 
 
     
