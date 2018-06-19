@@ -51,7 +51,7 @@ def acces():
 
 def liveTrader(cliente,moneda):
 
-    print('Actualizando mercado')
+    #print('Actualizando mercado')
     contador = 1
     capital = cuenta.capital()
     
@@ -73,7 +73,7 @@ def liveTrader(cliente,moneda):
         
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
-
+    
     if (senal == 1) & (inTheMarket==0) :
             
             
@@ -81,11 +81,19 @@ def liveTrader(cliente,moneda):
         try:
 
 
+            precio = trader.get_best_price(moneda,'asks',valorMoneda)
+            verificado = False
+            while verificado == False : 
+
+                compra = trader.limit_buy(moneda,valorMoneda,precio)
+                order_id = compra['orderId']
+                verificado = trader.verify_order(moneda,order_id)
+                if verificado == False :    
+                    trader.cancelar_orden(moneda,order_id)
             
-            #compra = trader.market_buy(moneda,valorMoneda)
-            msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(price)
+            msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
         except Exception as e:
             print(e)
 
@@ -101,22 +109,38 @@ def liveTrader(cliente,moneda):
             else:
                 float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
-            #venta = trader.market_sell(moneda,float_cantidad)
             
-            msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(price)
+           
+            precio = trader.get_best_price(moneda,'bids',valorMoneda)
+           
+            verificado = False
+
+            while verificado == False : 
+
+                venta = trader.limit_sell(moneda,valorMoneda,precio)
+                order_id = venta['orderId']
+                verificado = trader.verify_order(moneda,order_id)
+                if verificado == False :    
+                    trader.cancelar_orden(moneda,order_id)
+            
+
+            
+            
+            msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(precio)
         
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
 
         except Exception as e:
             print(e)
             
 
     else:
+        
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5).to_string())
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])
 
 
 
@@ -141,13 +165,14 @@ def main(acceso):
         
 def run(acceso):
     indice = 1
+    print("Actualizando mercado")
     for moneda in monedas:
         indice = indice+1
 
         thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
         thread.start()
         if indice == 30 : 
-            time.sleep(30)
+            time.sleep(15)
             indice = 1 
 
     

@@ -7,7 +7,8 @@ import numpy as numpy
 
 import time 
 from config import config
-
+import decimal
+ctx = decimal.Context()
 
 intervalo = config['interval']
 monedaBase = config['MonedaBase']
@@ -110,15 +111,32 @@ class BinanceTrader(BaseTrader):
         order = client.order_limit_sell(
             symbol=mercado,
             quantity=cantidad,
-            price=precio)
+            price=price)
         return order
 
-    def verify_order(order):
+    def verify_order(self,moneda,order_id):
 
-        if order['status'] == 'Filled':
-            return 1
+        time.sleep(3)
+
+        mercado = moneda + monedaBase
+
+        status = client.get_order(
+            symbol=mercado,
+            orderId=order_id )
+        if status['status'] == 'FILLED':
+            
+            return True
         else :
-            return 0
+            return False
+        
+
+    def cancelar_orden(self,moneda,order_id):
+
+
+        mercado = moneda + monedaBase
+        client.cancel_order(
+            symbol=mercado,
+            orderId=order_id)
 
 
     def get_best_price(self,moneda,side,cantidad):
@@ -146,10 +164,21 @@ class BinanceTrader(BaseTrader):
                 if row[3]> porcentaje:
                     return row[1]
                     break
+
+        ctx.prec = 20
+
+        def float_to_str(f):
+            """
+            Convert the given float to a string,
+            without resorting to scientific notation
+            """
+            d1 = ctx.create_decimal(repr(f))
+            return format(d1, 'f')  
  
         precio = mejor_precio(orders,cantidad)
-
-        return precio
+        #print(orders)
+        precio_str = float_to_str(precio)
+        return precio_str
         
 
 
