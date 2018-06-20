@@ -83,7 +83,7 @@ def liveTrader(cliente,moneda):
 
             precio = trader.get_best_price(moneda,'asks',valorMoneda)
             valorMoneda = trader.equivalent(moneda,pos,price)
-            verificado = True 
+            verificado = False 
             while verificado == False : 
 
                 compra = trader.limit_buy(moneda,valorMoneda,precio)
@@ -114,7 +114,7 @@ def liveTrader(cliente,moneda):
            
             precio = trader.get_best_price(moneda,'bids',valorMoneda)
             valorMoneda = trader.equivalent(moneda,pos,price)
-            verificado = True
+            verificado = False
 
             while verificado == False : 
 
