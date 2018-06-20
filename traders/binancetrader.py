@@ -14,6 +14,7 @@ intervalo = config['interval']
 monedaBase = config['MonedaBase']
 mail= config['email']
 mail_password = config['email_password']
+destinatarios = config['destinatarios']
 #from binance.client import Client
 from binance.enums import *
 
@@ -186,8 +187,8 @@ class BinanceTrader(BaseTrader):
         """
         Takes all the params to build the email and send it
         """
-        fromaddr = 'luisomar242@gmail.com' #from
-        toaddrs  = 'luisomar242@gmail.com' #to
+        fromaddr = mail #from
+        toaddrs  = destinatarios #to
 
         msg = "\r\n".join([
         "From: {}".format(fromaddr),

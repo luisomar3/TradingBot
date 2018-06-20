@@ -8,9 +8,9 @@ config = {
 
     "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
 
-    "ventana" :     6,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :     12,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'NANO',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'BNB',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":40, #umbral para optimizador
 
@@ -20,15 +20,15 @@ config = {
    
     "fechaFinal"  : "1 Jun, 2018"	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
-    "capitalSimulacion" : 0.0026, #Posicion a invertir para la optimizacion del portafolio
+    "capitalSimulacion" : 0.001, #Posicion a invertir para la optimizacion del portafolio
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['ETH'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['BNB','BCC'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.0012,  # posicion
 
-    'interval' : '30',
+    'interval' : '1',
     
     'frame' : 'm',
     

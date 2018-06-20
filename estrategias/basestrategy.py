@@ -18,10 +18,10 @@ class BaseStrategy():
 
         """
         
-        order  =  dataFrame['signal'].iloc[-2]
-        order2 = dataFrame['signal'].iloc[-3]
+        order  =  dataFrame['signal'].iloc[-1]
+       # order2 = dataFrame['signal'].iloc[-3]
         
-        return order,order2
+        return order#,order2
 
     def message(self,dataFrame):
         """ Metodo para extraer estadisticas generales de la estrategia.
@@ -29,17 +29,17 @@ class BaseStrategy():
         """
         data = dataFrame.copy()
 
-        senal1,senal2 =  self.__strategySignal(data)
+        senal1 =  self.__strategySignal(data)  #señal2 al lado, eliminado para prbar corridas
         #print(senal1)
-        #print(type(senal1))
-        if (senal1 == 1) &  (senal2 == -1) : 
-            item = senal1
-        elif (senal1 == -1) & (senal2 == 1) : 
-            item = senal1 
-        else :
-            item = senal1 or senal2
+        # #print(type(senal1))
+        # if (senal1 == 1) &  (senal2 == -1) : 
+        #     item = senal1
+        # elif (senal1 == -1) & (senal2 == 1) : 
+        #     item = senal1 
+        # else :
+        #     item = senal1 or senal2
         
-        return item
+        return senal1
 
     def crossover(self,row,indicadorAlza,indicadorBaja,inTheMarket = False):
         """Realiza el crossover de 2 indicadores, si el indicador de alza supera al de baja,

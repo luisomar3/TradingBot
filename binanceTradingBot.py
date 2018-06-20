@@ -66,7 +66,7 @@ def liveTrader(cliente,moneda):
         
         
     analizados =  estrategia.PDI_NDI_Cossover(datos)
-    #print(analizados[['O','H','L','C','PDI','NDI','signal']])
+    #|print(analizados[['O','H','L','C','PDI','NDI','signal']])
     senal = estrategia.message(analizados)
 
     price = analizados['C'].iloc[-2]
@@ -82,7 +82,8 @@ def liveTrader(cliente,moneda):
 
 
             precio = trader.get_best_price(moneda,'asks',valorMoneda)
-            verificado = False
+            valorMoneda = trader.equivalent(moneda,pos,price)
+            verificado = True 
             while verificado == False : 
 
                 compra = trader.limit_buy(moneda,valorMoneda,precio)
@@ -93,7 +94,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#,analizados['signal'].tail(5).to_string())
         except Exception as e:
             print(e)
 
@@ -112,8 +113,8 @@ def liveTrader(cliente,moneda):
             
            
             precio = trader.get_best_price(moneda,'bids',valorMoneda)
-           
-            verificado = False
+            valorMoneda = trader.equivalent(moneda,pos,price)
+            verificado = True
 
             while verificado == False : 
 
@@ -131,7 +132,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#,analizados['signal'].tail(5).to_string())
 
         except Exception as e:
             print(e)
@@ -140,7 +141,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))
 
 
 
@@ -164,6 +165,7 @@ def main(acceso):
         scheduler.start()
         
 def run(acceso):
+    time.sleep(15)
     indice = 1
     print("Actualizando mercado")
     for moneda in monedas:

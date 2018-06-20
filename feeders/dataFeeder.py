@@ -18,8 +18,8 @@ class DataFeeder():
 
         return: DataFrame ordenado.
         """
-        data = dataFrame
-        data = self.dropUseless(dataFrame)
+        data = dataFrame.copy()
+        data = self.dropUseless(data)
         data.datetime = pd.to_datetime(data.datetime, unit='ms')
         data = data.set_index("datetime")
         
