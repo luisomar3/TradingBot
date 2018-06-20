@@ -74,7 +74,7 @@ def liveTrader(cliente,moneda):
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
     
-    senal = -1
+    senal = 1
     
 
     if (senal == 1) & (inTheMarket==0) :
@@ -85,7 +85,7 @@ def liveTrader(cliente,moneda):
 
 
             precio = trader.get_best_price(moneda,'asks',valorMoneda)
-            valorMoneda = trader.equivalent(moneda,pos,price)
+            valorMoneda = trader.equivalent(moneda,pos,float(precio))
             verificado = False 
             while verificado == False : 
 
@@ -97,7 +97,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#analizados.index[-1])#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#analizados['signal'].tail(5))#analizados.index[-1])#,analizados['signal'].tail(5).to_string())
         except Exception as e:
             print(e)
 
@@ -136,7 +136,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#,analizados.index[-1])
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados.index[-1])#senal,analizados['signal'].tail(5))#,
 
         except Exception as e:
             print(e)
@@ -145,7 +145,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#analizados.index[-1])
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#analizados['signal'].tail(5))#)
 
 
 
