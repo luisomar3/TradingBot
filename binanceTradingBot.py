@@ -94,7 +94,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
         except Exception as e:
             print(e)
 
@@ -132,7 +132,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
 
         except Exception as e:
             print(e)
@@ -141,7 +141,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])
 
 
 
