@@ -69,11 +69,14 @@ def liveTrader(cliente,moneda):
     #|print(analizados[['O','H','L','C','PDI','NDI','signal']])
     senal = estrategia.message(analizados)
 
-    price = analizados['C'].iloc[-2]
+    price = analizados['C'].iloc[-1]
         
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
     
+    senal = -1
+    
+
     if (senal == 1) & (inTheMarket==0) :
             
             
@@ -94,7 +97,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#analizados.index[-1])#,analizados['signal'].tail(5).to_string())
         except Exception as e:
             print(e)
 
@@ -111,9 +114,10 @@ def liveTrader(cliente,moneda):
                 float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
             
+            valorMoneda = float_cantidad
            
             precio = trader.get_best_price(moneda,'bids',valorMoneda)
-            valorMoneda = trader.equivalent(moneda,pos,price)
+            
             verificado = False
 
             while verificado == False : 
@@ -132,7 +136,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#,analizados['signal'].tail(5).to_string())
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#,analizados.index[-1])
 
         except Exception as e:
             print(e)
@@ -141,7 +145,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#analizados.index[-1])
 
 
 
