@@ -10,7 +10,7 @@ config = {
 
     "ventana" :     20,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'ENG',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'XVG',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":10, #umbral para optimizador
 
@@ -26,11 +26,11 @@ config = {
 
     'monedas': ['ENG'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
-    'posicion' : 0.0012,  # posicion
+    'posicion' : 0.0011,  # posicion
 
     'interval' : '1',
     
-    'frame' : 'm',
+    'frame' : 'h',
     
     "cron_intervals" : {'1':'*/1', "2": "*/2", '3' : '*/3','4':'*/4', '5': '*/5', '6':'*/6','7':'*/6','8':'*/8','9':'*/9','10':'*/10','15':'*/15','30':'*/30'} ,
     
