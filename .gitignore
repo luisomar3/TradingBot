@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-ta-lib/
-=======
 ta-lib
->>>>>>> b2ec405faeb82d2d4fd476dd9dd3f78b1edf1489
 *.xlsx
 *.docx
 myvenv

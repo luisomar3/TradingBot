@@ -95,7 +95,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#analizados['signal'].tail(5)
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#
         except Exception as e:
             print(e)
 
@@ -134,7 +134,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#)analizados['signal'].tail(5)
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados['signal'].tail(5))#analizados.index[-1])#,
 
         except Exception as e:
             print(e)
@@ -143,7 +143,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#analizados['signal'].tail(5)
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#analizados.index[-1])#)#)
 
 
 
@@ -161,7 +161,7 @@ def main(acceso):
         scheduler.start()
        
     elif frame == 'h': 
-        scheduler.add_job(liveTrader, trigger='cron',
+        scheduler.add_job(run, trigger='cron',
                             hour=crontrigger, args=[acceso])
         print('Revisando senal cada {min} hora'.format(min = intervalo))
         scheduler.start()
