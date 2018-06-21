@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np 
 from ta import *
-
+import talib
 #import matplotlib.pyplot as plt 
 #import matplotlib.dates as mdates
 from config import config
@@ -117,4 +117,16 @@ class Indicadores():
         data['shift_PDI'] = data['PDI'].shift()
         data['shift_NDI'] = data['NDI'].shift()
         return data
+
+    def talib_ADX(self,data):
+        """Version de Talib del ADX, esperando perfeccion
+        """
+        df = data.copy()
+
+        df['ADX'] = talib.ADX(df['H'],df['L'],df['C'], timeperiod=window)
+
+        df['PDI'] = talib.PLUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+
+        df['NDI'] =  talib.MINUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+        return df
 

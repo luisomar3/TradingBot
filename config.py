@@ -10,7 +10,7 @@ config = {
 
     "ventana" :     12,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'BNB',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'NANO',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":40, #umbral para optimizador
 
@@ -24,11 +24,11 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['BNB'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['BNB','MANA','BCN'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.0012,  # posicion
 
-    'interval' : '1',
+    'interval' : '30',
     
     'frame' : 'm',
     
