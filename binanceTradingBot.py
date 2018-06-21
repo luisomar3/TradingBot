@@ -111,7 +111,7 @@ def liveTrader(cliente,moneda):
             if decimal == 0:
                 float_cantidad = int(float(cantidad))
             else:
-                float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
+                float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal #
                 #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
             
             valorMoneda = float_cantidad
