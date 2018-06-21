@@ -126,7 +126,10 @@ class Indicadores():
         df['ADX'] = talib.ADX(df['H'],df['L'],df['C'], timeperiod=window)
 
         df['PDI'] = talib.PLUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
-
+        df['shift_PDI'] = df['PDI'].shift(1)
+        
         df['NDI'] =  talib.MINUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+        df['shift_NDI'] = df['NDI'].shift(1)
+        
         return df
 

@@ -10,19 +10,22 @@ import matplotlib.pyplot as plt
 indi = Indicadores()
 moneda = config['monedaSimulacion']
 feeder = BinanceFeeder()
-#adx = EstrategiaAdx()
+adx = EstrategiaAdx()
 
 def Backtest():
     
     velas = feeder.get_candle(moneda)
     #print(velas)
-    a = indi.talib_ADX(velas)
-    print(a,'aqui')
-    a.plot(x=a.index, y=["ADX", "PDI", "NDI"])
-    a.to_csv('NANO-12PERIODOS-30m.csv')
-    plt.show()
-    #analizados = adx.PDI_NDI_Cossover(velas)
-
+    #a = indi.talib_ADX(velas)
+    #print(a)
+    #a.plot(x=a.index, y=["ADX", "PDI", "NDI"])
+    #
+    #plt.show()
+    analizados = adx.PDI_NDI_Cossover(velas)
+    
+    analizados.to_csv('NANO-12PERIODOS-30m-CONOPERACIONES.csv')
+    
+    print(analizados)
 
     #promedio = adx.plot_and_stats(analizados,moneda,plot = True,historico = False)
 

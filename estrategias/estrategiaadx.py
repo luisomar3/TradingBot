@@ -22,7 +22,7 @@ class EstrategiaAdx(BaseStrategy):
 
         """
         datos = dataFrame.copy()
-        datos = indicadores.ADX(datos)
+        datos = indicadores.talib_ADX(datos)
         datos['signal'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
         #print(len(datos))
         for index,row in datos['signal'].iteritems():

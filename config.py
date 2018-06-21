@@ -8,11 +8,11 @@ config = {
 
     "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
 
-    "ventana" :     12,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :     20,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'NANO',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'ENG',  #moneda para simular y graficar ganancias.
     
-    "umbralOptimizador":40, #umbral para optimizador
+    "umbralOptimizador":10, #umbral para optimizador
 
     "modo" : 2,  # 1 para simulacion, 2 para bot
 
@@ -24,11 +24,11 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['BNB','MANA','BCN'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['ENG'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.0012,  # posicion
 
-    'interval' : '30',
+    'interval' : '1',
     
     'frame' : 'm',
     
