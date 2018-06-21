@@ -1,4 +1,4 @@
-ta-lib/
+ta-lib
 *.xlsx
 *.docx
 myvenv
