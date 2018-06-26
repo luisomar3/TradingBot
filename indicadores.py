@@ -133,3 +133,27 @@ class Indicadores():
         
         return df
 
+    def talib_ADX_atrasado(self,data):
+        """Version de Talib del ADX, con un periodo atrasado
+        :param data: dataFrame que contiene las velas
+        :type data: pd.DataFrame
+
+        :param retraso: Numero de velas para retrasar
+        :type retraso: Int
+        
+        """
+        df = data.copy()
+
+        df['ADX'] = talib.ADX(df['H'],df['L'],df['C'], timeperiod=window)
+
+        df['PDI'] = talib.PLUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+        df['PDI'] = df['PDI'].shift(-1)
+        df['shift_PDI'] = df['PDI'].shift(1)
+        
+        df['NDI'] =  talib.MINUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+        df['NDI'] = df['NDI'].shift(-1)
+        df['shift_NDI'] = df['NDI'].shift(1)
+        
+        return df
+
+    

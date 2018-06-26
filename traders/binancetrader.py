@@ -158,7 +158,7 @@ class BinanceTrader(BaseTrader):
         orders = orders.drop(columns = 2 ,  axis =1 )
         orders = orders.apply(pd.to_numeric)
         orders['sumatoria'] = orders['quantity'].cumsum()
-
+        
         def mejor_precio(orders,cantidad):
             porcentaje = cantidad * 1.5
             for row in orders.itertuples():

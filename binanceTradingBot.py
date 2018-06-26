@@ -25,6 +25,7 @@ intervalo =  config['interval']
 intervals =config['cron_intervals']
 frame = config['frame']
 crontrigger = intervals[intervalo]
+delay = config['retraso']
 
 
 
@@ -63,9 +64,10 @@ def liveTrader(cliente,moneda):
     #print(capital)
     pos =  posicion
     cliente = cuenta.client
-        
-        
+            
     analizados =  estrategia.PDI_NDI_Cossover(datos)
+    #print(analizados['signal'].tail(5))
+    #analizados['signal'] = analizados['signal'].shift(1)
     #|print(analizados[['O','H','L','C','PDI','NDI','signal']])
     senal = estrategia.message(analizados)
 
@@ -73,8 +75,8 @@ def liveTrader(cliente,moneda):
         
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
-    
 
+    senal = -1
     if (senal == 1) & (inTheMarket==0) :
             
             
@@ -88,6 +90,7 @@ def liveTrader(cliente,moneda):
             while verificado == False : 
 
                 compra = trader.limit_buy(moneda,valorMoneda,precio)
+
                 order_id = compra['orderId']
                 verificado = trader.verify_order(moneda,order_id)
                 if verificado == False :    
@@ -95,7 +98,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#senal,analizados['signal'].tail(5))#
         except Exception as e:
             print(e)
 
@@ -134,7 +137,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg)
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados['signal'].tail(5))#analizados.index[-1])#,
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados[['PDI','NDI','signal']].tail(2))#analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))
 
         except Exception as e:
             print(e)
@@ -143,7 +146,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados['signal'].tail(5))#analizados.index[-1])#)#)
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados[['PDI','NDI','signal']].tail(2))#analizados.index[-1])#
 
 
 
@@ -156,18 +159,19 @@ def main(acceso):
     #liveTrader(acceso)
     if frame == 'm':
         scheduler.add_job(run, trigger='cron',
-                            minute=crontrigger,args = [acceso])
+                            minute='*/1',args = [acceso])
         print('Revisando senal cada {min} minuto'.format(min = intervalo))
         scheduler.start()
        
     elif frame == 'h': 
         scheduler.add_job(run, trigger='cron',
-                            hour=crontrigger, args=[acceso])
+                            minute='*/1', args=[acceso])
         print('Revisando senal cada {min} hora'.format(min = intervalo))
         scheduler.start()
         
 def run(acceso):
-    time.sleep(15)
+
+    time.sleep(11)
     indice = 1
     print("Actualizando mercado")
     for moneda in monedas:

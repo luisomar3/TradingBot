@@ -19,7 +19,7 @@ def Backtest():
     #a = indi.talib_ADX(velas)
     #print(a)
     #a.plot(x=a.index, y=["ADX", "PDI", "NDI"])
-    #
+    
     #plt.show()
     analizados = adx.PDI_NDI_Cossover(velas)
     

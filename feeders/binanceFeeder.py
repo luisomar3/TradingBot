@@ -37,13 +37,13 @@ class BinanceFeeder(DataFeeder):
         columnsName = klines.columns.values.tolist()
         candles = self.normalizeKlines(klines,columnsName)
         #candles = candles.set_index(candles.index - pd.Timedelta(2, unit =  'h'))
-        candles = candles.drop(candles.index[-1])
+        #candles = candles.drop(candles.index[-1])
         return candles
 
     def get_orders(self,coin):
         """ Get active orders
         """
-        data = pd.DataFrame(client.get_orderbook_ticker() )
+        data = pd.DataFrame(client.get_orderbook_ticker())
         return data
         
     def get_btc_markets(self):

@@ -1,3 +1,5 @@
+*.csv
+*.csv#
 ta-lib
 *.xlsx
 *.docx
