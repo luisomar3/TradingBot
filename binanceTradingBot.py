@@ -76,7 +76,7 @@ def liveTrader(cliente,moneda):
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
 
-    senal = -1
+
     if (senal == 1) & (inTheMarket==0) :
             
             

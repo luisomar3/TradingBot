@@ -8,9 +8,9 @@ config = {
 
     "secret_key":"I3S3KFNBanZStUpXHhPKTgWAxHrUUtGgBjuU7XIL2Eb1bct83nKqEMucjfR6q7qe",
 
-    "ventana" :3,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :14,  #Cantidad de dias con que se hara el promedio movil
     
-    "monedaSimulacion": 'BNB',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'NANO',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":10, #umbral para optimizador
 
@@ -24,12 +24,12 @@ config = {
     
     "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
-    'monedas': ['BNB'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
+    'monedas': ['NANO'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.00102,  # posicion
 
     'interval' : '5',
-    
+        
     'frame' : 'm',
 
     'retraso' : '', # minutos a esperar para comenzar analisis
