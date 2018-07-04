@@ -119,6 +119,7 @@ def liveTrader(cliente,moneda):
 
            
         try:
+            trader.cancel_open_order(moneda)
             info = cliente.get_asset_balance(asset=moneda)
             cantidad  =info['free']
             decimal = trader.decimales(moneda)
@@ -225,12 +226,12 @@ def stopLoss(cliente,moneda):
 
         vwma = indicadores.VWMA(velas,vela,periodo)
 
-        price = vwma.iloc[-1]
+        stopPrice = vwma.iloc[-1]
 
         decimalPrecio = trader.decimales_precio(moneda)       
-        price =int(float(price) * 10**decimalPrecio) / 10.0**decimalPrecio
+        stopPrice =int(float(price) * 10**decimalPrecio) / 10.0**decimalPrecio
 
-        price = trader.float_to_str(price)
+        stopPrice = trader.float_to_str(stopPrice)
         
         info = cliente.get_asset_balance(asset=moneda)
 
@@ -246,10 +247,15 @@ def stopLoss(cliente,moneda):
             
         valorMoneda = float_cantidad
         
+        price = trader.get_best_price(moneda,'bids',valorMoneda)
 
-        venta = trader.stop_limit_sell(moneda,valorMoneda,price,price)
+        venta = trader.stop_limit_sell(moneda,valorMoneda,price,stopPrice)
         
-        print('Stop Loss para {coin} colocado en : {price1}'.format(price1 = price,coin = moneda))
+        print('Stop Loss para {coin} colocado en : {price1} con un precio de venta {venta} '.format(
+            price1 = stopPrice,
+            coin = moneda,
+            venta = price
+            ))
 
 
 if __name__ == '__main__':

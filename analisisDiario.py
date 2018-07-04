@@ -26,6 +26,7 @@ def Analisis():
         portfolio = []
 
         for moneda in tqdm(monedasBTC):
+
             time.sleep(0.3)
 
             velas = feeder.get_daily_candle(moneda)
@@ -33,8 +34,7 @@ def Analisis():
             analizados = estrategia(velas)
 
             prueba = adx.message(analizados)
-           
-              
+            
             if prueba == 1 :
                 portfolio.append(moneda)
 
@@ -45,7 +45,7 @@ def Analisis():
         
         actuales = set(config['monedas'])
         extraidas = [x for x in viejas if x not in actuales]
-        print(extraidas)
+        
 
 
 
