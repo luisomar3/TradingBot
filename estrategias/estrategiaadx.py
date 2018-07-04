@@ -22,9 +22,12 @@ class EstrategiaAdx(BaseStrategy):
 
         """
         datos = dataFrame.copy()
+        #datos['stopLoss'] =  indicadores.VWMA(datos,'L',12) incluir para hacer simulacion con stopLoss
+
         datos = indicadores.talib_ADX(datos)
         datos['signal'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
-        #print(len(datos))
+        #datos['salidasStopLoss']  = np.where(datos['stopLoss'] > datos['L'],-1,0)  
+        
         for index,row in datos['signal'].iteritems():
             if (row!=0) & (row==-1):
                 #print(row,'primer valor venta')
@@ -37,6 +40,30 @@ class EstrategiaAdx(BaseStrategy):
         #print(len(datos))
         return datos
 
+    def AROON_DI_Cossover(self,dataFrame):
+        """ Estrategia Crossover del ADX, en realidad, usaremos los NDI y PDI para generar las señales de compra/venta
+
+        """
+        datos = dataFrame.copy()
+        #datos['stopLoss'] =  indicadores.VWMA(datos,'L',12) incluir para hacer simulacion con stopLoss
+
+        datos = indicadores.talib_ADX(datos)
+        datos = indicadores.aroon(datos)
+        datos['signalDM'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
+        datos['signalAroon'] = datos.apply(self.crossover,args = ('aroonUp','aroonDown'),axis = 1)
+        #datos['salidasStopLoss']  = np.where(datos['stopLoss'] > datos['L'],-1,0)  
+        datos = self.del_primera_venta(datos,'signalDM')
+        datos = self.del_primera_venta(datos,'signalAroon')
+        datos['signal'] = datos.apply(self.two_entry_signals_and,args = ('DM','Aroon'),axis = 1 )
+        
+        
+        datos = self.extraer_salidas(datos)
+        #print(len(datos))
+        return datos
+
+    
+
+    
     def plot_and_stats(self,data1,moneda,plot=True,historico=True):
         """Grafica la estrategia
         """
@@ -137,3 +164,23 @@ class EstrategiaAdx(BaseStrategy):
             plt.show()
         
         return averages
+
+
+    def del_primera_venta(self,datos,senal):
+
+
+        for index,row in datos[senal].iteritems():
+            if (row!=0) & (row==-1):
+                #print(row,'primer valor venta')
+                datos.drop(index, inplace=True)
+                break
+            
+            if (row!=0) & (row== 1):
+                #print(row,'primer valor c')
+                break
+        
+        return  datos
+
+
+
+    

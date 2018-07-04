@@ -11,6 +11,7 @@ from config import config
 # sns.axes_style('darkgrid')
 modo =  config['modo']
 window = config['ventana']
+windowAroon = config['ventanaAroon']
 
 class Indicadores():
     """Esta clase contiene todos los indicadores disponibles en el sistema. Seran pasados
@@ -156,4 +157,29 @@ class Indicadores():
         
         return df
 
-    
+    def VWMA(self,df,kline,ventana):
+        """ Media movil ponderada por volumen
+        """
+        data = df.copy()
+        price = data[kline]
+        volume = data['V']
+        volumexprice = price * volume
+        #print(type(price))
+        #print(type(volume))
+        #print(type(volumexprice))
+        data['VMA'] = volumexprice.rolling(ventana).mean() / volume.rolling(ventana).mean()
+ 
+
+        return data['VMA']
+
+    def aroon(self,df):
+        """ Indicador Aroon
+
+        """
+        data = df.copy()
+
+        data['aroonDown'],data['aroonUp'] = talib.AROON(data['H'],data['L'],windowAroon)
+        data['shift_aroonDown'] = data['aroonDown'].shift()
+        data['shift_aroonUp'] = data['aroonUp'].shift()
+
+        return data

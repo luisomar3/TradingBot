@@ -61,5 +61,55 @@ class BaseStrategy():
         else:
             return  0
 
+    def two_entry_signals_and(self,row,indicador1,indicador2):
+        """En este caso, devolveremos la senal indicador 1 porque es la señal del ADX la que queremos como salida
+        """
 
-    
+        senal = 'signal'+indicador1
+        senal2 = 'signal'+indicador2
+
+        if (row[senal] == 1 ) & (row[senal2] == 1) :
+
+            return 1
+
+        elif (row[senal] == -1) :
+
+            return int(row[senal] )
+
+        else :
+            return 0
+
+
+    def extraer_salidas(self,dataFrame):
+        """Procedimiento para extraer salidas innecesarias
+        """
+        datos = dataFrame.copy()
+        compra = self.compra(datos,'signal')
+        for idx,item in enumerate(dataFrame['signal']):
+            
+            if (item == -1) & (compra == False):
+                datos['signal'].iloc[idx] = 0
+            if (item == -1 ) & (compra == True):
+                compra = False
+            if item == 1 :
+                compra = True
+        return datos
+
+    def compra(self,datos,senal):
+
+
+        for index,row in datos[senal].iteritems():
+            if (row==-1):
+                #print(row,'primer valor venta')
+                compra = False
+                return compra
+                break
+            
+            if (row== 1):
+                #print(row,'primer valor c')
+                compra = True
+                return compra
+                break
+        
+        
+

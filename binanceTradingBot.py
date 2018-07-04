@@ -10,24 +10,37 @@ from timeit import default_timer as timer
 from estrategias.estrategiaadx import   EstrategiaAdx
 from feeders.binanceFeeder import BinanceFeeder
 from accounts.binanceaccount import BinanceAccount
-from traders.binancetrader import BinanceTrader 
+from traders.binancetrader import BinanceTrader
+from indicadores import Indicadores
 from config import config
 
 #Iniciar modulos
-estrategia = EstrategiaAdx()
+adx = EstrategiaAdx()
 feeder = BinanceFeeder()
 cuenta = BinanceAccount()
 trader = BinanceTrader()
+indicadores = Indicadores()
+
+
+if config['estrategia'] == 1:
+    estrategia = adx.PDI_NDI_Cossover
+elif config['estrategia'] == 2:
+    estrategia = adx.AROON_DI_Cossover
+
+
+
 monedas = config['monedas']
-scheduler = BlockingScheduler()
+scheduler1 = BlockingScheduler()
+scheduler2 = BlockingScheduler()
 posicion = config['posicion'] 
 intervalo =  config['interval']
 intervals =config['cron_intervals']
 frame = config['frame']
 crontrigger = intervals[intervalo]
-delay = config['retraso']
-
-
+retraso_m = config['retraso']
+retraso = retraso_m * 60
+periodo = config['ventanaVWMA']
+vela = config['velaVWMA']
 
 df = pd.DataFrame(columns = ['ID','MONEDA','CANTIDADC','PRECIOC','CANTIDADV','PRECIOV','GANANCIA','GANACIA%'])
 
@@ -65,18 +78,18 @@ def liveTrader(cliente,moneda):
     pos =  posicion
     cliente = cuenta.client
             
-    analizados =  estrategia.PDI_NDI_Cossover(datos)
+    analizados =  estrategia(datos)
     #print(analizados['signal'].tail(5))
     #analizados['signal'] = analizados['signal'].shift(1)
     #|print(analizados[['O','H','L','C','PDI','NDI','signal']])
-    senal = estrategia.message(analizados)
+    senal = adx.message(analizados)
 
     price = analizados['C'].iloc[-1]
         
     valorMoneda = trader.equivalent(moneda,pos,price)
     inTheMarket= trader.in_the_market(moneda,pos,price)
 
-
+    
     if (senal == 1) & (inTheMarket==0) :
             
             
@@ -97,8 +110,8 @@ def liveTrader(cliente,moneda):
                     trader.cancelar_orden(moneda,order_id)
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
-            trader.send_email(msg)
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#senal,analizados['signal'].tail(5))#
+            trader.send_email(msg,"COMPRA REALIZADA")
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#senal,analizados['signal'].tail(5))#
         except Exception as e:
             print(e)
 
@@ -135,9 +148,9 @@ def liveTrader(cliente,moneda):
             msg = "Se vendieron " + str(float_cantidad) + " " + str(moneda) + " a " + str(precio)
         
             
-            trader.send_email(msg)
+            trader.send_email(msg,"VENTA REALIZADA")
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))#analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados[['PDI','NDI','signal']].tail(2))##analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))
 
         except Exception as e:
             print(e)
@@ -146,7 +159,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))
 
 
 
@@ -158,33 +171,86 @@ def main(acceso):
     """
     #liveTrader(acceso)
     if frame == 'm':
-        scheduler.add_job(run, trigger='cron',
-                            minute='*/1',args = [acceso])
+        delay_s = int(intervalo) * 60 
+
+        scheduler1.add_job(run, trigger='cron',
+                            minute=crontrigger,args = [acceso,delay_s])
         print('Revisando senal cada {min} minuto'.format(min = intervalo))
-        scheduler.start()
+        #scheduler1.start()
        
     elif frame == 'h': 
-        scheduler.add_job(run, trigger='cron',
-                            minute='*/1', args=[acceso])
+        delay_s = int(intervalo) * 60**2
+        scheduler1.add_job(run, trigger='cron',
+                            minute=crontrigger, args=[acceso,delay_s])
         print('Revisando senal cada {min} hora'.format(min = intervalo))
-        scheduler.start()
-        
-def run(acceso):
+        #scheduler1.start()
 
-    time.sleep(11)
-    indice = 1
+    scheduler1.add_job(run2,trigger='cron',
+                            minute=crontrigger, args=[acceso])
+
+    scheduler1.start()
+
+def run(acceso,delay):
+    tiempo = delay - retraso
+    time.sleep(tiempo)
+    
     print("Actualizando mercado")
+
+    
+
     for moneda in monedas:
-        indice = indice+1
 
         thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
         thread.start()
-        if indice == 30 : 
-            time.sleep(15)
-            indice = 1 
+
+def run2(acceso):
 
     
+    for moneda in monedas:
+
+        thread2 = threading.Thread(target=stopLoss, args=[acceso,moneda])
+        thread2.start()
+        
     
+def stopLoss(cliente,moneda):
+
+
+    inTheMarket= trader.in_the_market(moneda,posicion)
+    #print(inTheMarket)
+    if inTheMarket == 1 :
+    
+        trader.cancel_open_order(moneda)
+        
+        velas = feeder.get_candle(moneda)
+
+        vwma = indicadores.VWMA(velas,vela,periodo)
+
+        price = vwma.iloc[-1]
+
+        decimalPrecio = trader.decimales_precio(moneda)       
+        price =int(float(price) * 10**decimalPrecio) / 10.0**decimalPrecio
+
+        price = trader.float_to_str(price)
+        
+        info = cliente.get_asset_balance(asset=moneda)
+
+        cantidad  =info['free']
+
+        decimal = trader.decimales(moneda)
+
+        if decimal == 0:
+            float_cantidad = int(float(cantidad))
+        else:
+            float_cantidad = int(float(cantidad) * 10**decimal) / 10.0**decimal
+            #print(float_cantidad,"redondeado"," ",cantidad,'decimales')
+            
+        valorMoneda = float_cantidad
+        
+
+        venta = trader.stop_limit_sell(moneda,valorMoneda,price,price)
+        
+        print('Stop Loss para {coin} colocado en : {price1}'.format(price1 = price,coin = moneda))
+
 
 if __name__ == '__main__':
     

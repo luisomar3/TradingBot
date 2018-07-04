@@ -9,6 +9,10 @@ umbral = config['umbralOptimizador']
 #moneda = config['monedaSimulacion']
 feeder = BinanceFeeder()
 adx = EstrategiaAdx()
+if config['estrategia'] == 1:
+    estrategia = adx.PDI_NDI_Cossover
+elif config['estrategia'] == 2:
+    estrategia = adx.AROON_DI_Cossover
 
 def Backtest():
     
@@ -22,7 +26,8 @@ def Backtest():
 
             velas = feeder.get_candle(moneda)
 
-            analizados = adx.PDI_NDI_Cossover(velas)
+            analizados = estrategia(velas)
+            #analizados = adx.AROON_DI_Cossover(velas)
 
             promedio = adx.plot_and_stats(analizados,moneda,plot = False,historico = False)
             print(moneda,promedio)

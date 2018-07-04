@@ -66,6 +66,26 @@ class BinanceTrader(BaseTrader):
         #print(noComa)
         #print(noComa.find('1'))
         return noComa.find('1')
+
+    def decimales_precio(self,moneda):
+        mercado = moneda + monedaBase
+        info = client.get_symbol_info(mercado)
+
+        filters = info['filters']
+        tickSize = filters[0]['tickSize']
+
+        noComa = tickSize.replace('.','')
+        #print(noComa)
+        #print(noComa.find('1'))
+        return noComa.find('1')
+
+
+
+
+
+
+
+
     def market_buy(self,moneda,cantidad):
         """Metodo para  realizar un market buy
         """
@@ -81,13 +101,26 @@ class BinanceTrader(BaseTrader):
         order = client.order_market_sell(symbol=mercado,quantity=cantidad)
         return order
 
-    def in_the_market(self,moneda,posicion,price):
+    def in_the_market(self,moneda,posicion,price = None):
         """Metodo para saber si estoy o no en el mercado
         """
+        mercado = moneda+monedaBase
+
         infoActivo = client.get_asset_balance(moneda)
-        comprado = float(infoActivo['free'])
-        porComprar = self.equivalent(moneda,posicion,price) 
-        porComprarPor = porComprar - (porComprar*0.2)
+        comprado = float(infoActivo['free']) + float(infoActivo['locked'])
+
+        if price is not None: 
+
+            porComprar = self.equivalent(moneda,posicion,price) 
+
+        else:
+
+            price = client.get_symbol_ticker(symbol = mercado)
+
+            porComprar = float(price['price'])
+            
+        porComprarPor = porComprar - (porComprar*0.8)
+
         if comprado >= porComprarPor:
             inTheMarket = 1  # Verifico que la posicion sea mayor al monto q poseo en esa moneda.
         else:
@@ -113,6 +146,20 @@ class BinanceTrader(BaseTrader):
             symbol=mercado,
             quantity=cantidad,
             price=price)
+        return order
+
+    def stop_limit_sell(self,moneda,cantidad,price,stop):
+        
+        mercado = moneda + monedaBase
+        order = client.create_order(
+            type = 'STOP_LOSS_LIMIT',
+            side = 'SELL',
+            symbol=mercado,
+            quantity=cantidad,
+            price=price,
+            stopPrice = stop,
+            timeInForce = "GTC")
+
         return order
 
     def verify_order(self,moneda,order_id):
@@ -168,22 +215,53 @@ class BinanceTrader(BaseTrader):
 
         ctx.prec = 20
 
-        def float_to_str(f):
+        
+ 
+        precio = mejor_precio(orders,cantidad)
+        #print(orders)
+        precio_str = self.float_to_str(precio)
+        return precio_str
+        
+
+    def float_to_str(self,f):
             """
             Convert the given float to a string,
             without resorting to scientific notation
             """
             d1 = ctx.create_decimal(repr(f))
             return format(d1, 'f')  
- 
-        precio = mejor_precio(orders,cantidad)
-        #print(orders)
-        precio_str = float_to_str(precio)
-        return precio_str
+
+
+    def open_orders(self,moneda):
+        mercado = moneda + monedaBase
+        orders = client.get_open_orders(symbol=mercado)
+        if not orders:
+            vacio = {}
+            return vacio
+        else:
+            dict_order =  orders[0]
+            return dict_order['orderId']
         
+    def cancel_open_order(self,moneda):
+        
+        order_id = self.open_orders(moneda)
+
+        if not order_id :
+            
+            return False
+
+        else : 
+
+            self.cancelar_orden(moneda,order_id)
+            print(order_id,'cancelada')
+
+            return True
 
 
-    def send_email(self,msg):
+
+
+
+    def send_email(self,msg,subject):
         """
         Takes all the params to build the email and send it
         """
@@ -193,7 +271,7 @@ class BinanceTrader(BaseTrader):
         msg = "\r\n".join([
         "From: {}".format(fromaddr),
         "To: {}".format(toaddrs),
-        "Subject: Investment Opportunity!",
+        "Subject: {}".format(subject),
         "",
         msg
         ])
