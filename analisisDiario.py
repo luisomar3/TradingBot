@@ -21,6 +21,7 @@ def Analisis():
     
     with open(path, 'r') as f:
         config = json.load(f)
+    
     viejas = config['monedas']
     monedasBTC = feeder.get_btc_markets()
     

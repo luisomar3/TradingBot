@@ -17,14 +17,14 @@ class EstrategiaAdx(BaseStrategy):
         self.name = 'Estrategia : ADX'
 
     
-    def PDI_NDI_Cossover(self,dataFrame):
+    def PDI_NDI_Cossover(self,dataFrame,ventana):
         """ Estrategia Crossover del ADX, en realidad, usaremos los NDI y PDI para generar las señales de compra/venta
 
         """
         datos = dataFrame.copy()
         #datos['stopLoss'] =  indicadores.VWMA(datos,'L',12) incluir para hacer simulacion con stopLoss
 
-        datos = indicadores.talib_ADX(datos)
+        datos = indicadores.talib_ADX(datos,ventana)
         datos['signal'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
         #datos['salidasStopLoss']  = np.where(datos['stopLoss'] > datos['L'],-1,0)  
         
@@ -40,14 +40,14 @@ class EstrategiaAdx(BaseStrategy):
         #print(len(datos))
         return datos
 
-    def AROON_DI_Cossover(self,dataFrame):
+    def AROON_DI_Cossover(self,dataFrame,ventana):
         """ Estrategia Crossover del ADX, en realidad, usaremos los NDI y PDI para generar las señales de compra/venta
 
         """
         datos = dataFrame.copy()
         #datos['stopLoss'] =  indicadores.VWMA(datos,'L',12) incluir para hacer simulacion con stopLoss
 
-        datos = indicadores.talib_ADX(datos)
+        datos = indicadores.talib_ADX(datos,ventana)
         datos = indicadores.aroon(datos)
         datos['signalDM'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
         datos['signalAroon'] = datos.apply(self.crossover,args = ('aroonUp','aroonDown'),axis = 1)

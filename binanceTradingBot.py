@@ -30,7 +30,7 @@ elif config['estrategia'] == 2:
 
 
 
-monedas = config['monedas']
+#monedas = config['monedas']
 scheduler1 = BlockingScheduler()
 scheduler2 = BlockingScheduler()
 posicion = config['posicion'] 
@@ -40,6 +40,7 @@ frame = config['frame']
 crontrigger = intervals[intervalo]
 retraso_m = config['retraso']
 retraso = retraso_m * 60
+ventana = config['ventana']
 periodo = config['ventanaVWMA']
 vela = config['velaVWMA']
 
@@ -79,7 +80,7 @@ def liveTrader(cliente,moneda):
     pos =  posicion
     cliente = cuenta.client
             
-    analizados =  estrategia(datos)
+    analizados =  estrategia(datos,ventana)
     #print(analizados['signal'].tail(5))
     #analizados['signal'] = analizados['signal'].shift(1)
     #|print(analizados[['O','H','L','C','PDI','NDI','signal']])
@@ -196,12 +197,11 @@ def run(acceso,delay):
     tiempo = delay - retraso
     time.sleep(tiempo)
     
-    print("Actualizando mercado")
+    print("Actualizando mercado para: ")
 
-    with open('config.json', 'r') as f:
-        config_monedas = json.load(f)
+   
     
-    monedas = config_monedas['monedas']
+    monedas = updateMonedas()
     print(monedas)
     for moneda in monedas:
 
@@ -210,7 +210,7 @@ def run(acceso,delay):
 
 def run2(acceso):
 
-    
+    monedas = updateMonedas()
     for moneda in monedas:
 
         thread2 = threading.Thread(target=stopLoss, args=[acceso,moneda])
@@ -262,6 +262,13 @@ def stopLoss(cliente,moneda):
             ))
 
 
+def updateMonedas():
+    """Funcion para actualizar las monedas desde el archivo de configuracion
+    """
+    
+    with open('config.json', 'r') as f:
+        config_monedas = json.load(f)
+    return config_monedas["monedas"]
 if __name__ == '__main__':
     
     acceso = acces()

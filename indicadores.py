@@ -119,17 +119,17 @@ class Indicadores():
         data['shift_NDI'] = data['NDI'].shift()
         return data
 
-    def talib_ADX(self,data):
+    def talib_ADX(self,data,ventana):
         """Version de Talib del ADX, esperando perfeccion
         """
         df = data.copy()
 
-        df['ADX'] = talib.ADX(df['H'],df['L'],df['C'], timeperiod=window)
+        df['ADX'] = talib.ADX(df['H'],df['L'],df['C'], timeperiod=ventana)
 
-        df['PDI'] = talib.PLUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+        df['PDI'] = talib.PLUS_DI(df['H'],df['L'],df['C'], timeperiod=ventana)
         df['shift_PDI'] = df['PDI'].shift(1)
         
-        df['NDI'] =  talib.MINUS_DI(df['H'],df['L'],df['C'], timeperiod=window)
+        df['NDI'] =  talib.MINUS_DI(df['H'],df['L'],df['C'], timeperiod=ventana)
         df['shift_NDI'] = df['NDI'].shift(1)
         
         return df
