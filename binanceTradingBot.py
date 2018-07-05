@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import time 
 import tqdm
+import json
 import datetime
 from apscheduler.schedulers.blocking import BlockingScheduler
 import threading
@@ -51,7 +52,7 @@ def acces():
     if cuenta.habilitado == True:
         print('Acceso a cuenta exitoso')
         time.sleep(0.5)
-        monedaBase, portafolio = cuenta.portafolio(monedas)
+        #monedaBase, portafolio = cuenta.portafolio(monedas)
         capitalSTR = cuenta.capital()
         capitalINT = float(capitalSTR)
         cliente = cuenta.client
@@ -66,7 +67,7 @@ def acces():
 def liveTrader(cliente,moneda):
 
     #print('Actualizando mercado')
-    contador = 1
+
     capital = cuenta.capital()
     
     
@@ -197,8 +198,11 @@ def run(acceso,delay):
     
     print("Actualizando mercado")
 
+    with open('config.json', 'r') as f:
+        config_monedas = json.load(f)
     
-
+    monedas = config_monedas['monedas']
+    print(monedas)
     for moneda in monedas:
 
         thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
