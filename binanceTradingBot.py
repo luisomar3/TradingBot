@@ -203,19 +203,24 @@ def run(acceso,delay):
     
     monedas = updateMonedas()
     print(monedas)
-    for moneda in monedas:
+    if monedas:
 
-        thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
-        thread.start()
+        for moneda in monedas:
 
+            thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
+            thread.start()
+    else:
+        print('No hay monedas para trabajar, posible mecardo bajista')
 def run2(acceso):
 
     monedas = updateMonedas()
-    for moneda in monedas:
+    if monedas :
+        for moneda in monedas:
 
-        thread2 = threading.Thread(target=stopLoss, args=[acceso,moneda])
-        thread2.start()
-        
+            thread2 = threading.Thread(target=stopLoss, args=[acceso,moneda])
+            thread2.start()
+    else:
+        print('No hay monedas para trabajar, posible mecardo bajista')
     
 def stopLoss(cliente,moneda):
 
