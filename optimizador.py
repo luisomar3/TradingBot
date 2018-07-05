@@ -5,7 +5,7 @@ from feeders.binanceFeeder import BinanceFeeder
 from estrategias.estrategiaadx import EstrategiaAdx
 from config import config
 umbral = config['umbralOptimizador']
-
+ventana = config['ventana']
 #moneda = config['monedaSimulacion']
 feeder = BinanceFeeder()
 adx = EstrategiaAdx()
@@ -26,7 +26,7 @@ def Backtest():
 
             velas = feeder.get_candle(moneda)
 
-            analizados = estrategia(velas)
+            analizados = estrategia(velas,ventana)
             #analizados = adx.AROON_DI_Cossover(velas)
 
             promedio = adx.plot_and_stats(analizados,moneda,plot = False,historico = False)
