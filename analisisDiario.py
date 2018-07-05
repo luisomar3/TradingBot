@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import json
 import time
+import os
 
 from feeders.binanceFeeder import BinanceFeeder
 from estrategias.estrategiaadx import EstrategiaAdx
@@ -13,11 +14,12 @@ feeder = BinanceFeeder()
 adx = EstrategiaAdx()
 
 estrategia = adx.PDI_NDI_Cossover
+path = os.getcwd() + '/config.json'
 
 def Analisis():
     
     
-    with open('config.json', 'r') as f:
+    with open(path, 'r') as f:
         config = json.load(f)
     viejas = config['monedas']
     monedasBTC = feeder.get_btc_markets()
@@ -49,7 +51,7 @@ def Analisis():
 
 
 
-        with open('config.json', 'w') as f:
+        with open(path, 'w') as f:
             json.dump(config, f)    
 
         msg = "El analisis diario arrojo las siguientes monedas: {lista_monedas} Y se extrajeron {extract}".format(
