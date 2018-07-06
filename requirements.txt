@@ -38,3 +38,11 @@ tzlocal==1.5.1
 urllib3==1.22
 zope.interface==4.4.3
 tqdm
+future==0.16.0
+oauthlib==2.1.0
+PySocks==1.6.8
+python-telegram-bot==10.1.0
+requests-oauthlib==0.8.0
+
+
+

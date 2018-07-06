@@ -36,7 +36,7 @@ config = {
 
     'posicion' : 0.0012,  # posicion
 
-    'interval' : '5',
+    'interval' : '3',
         
     'frame' : 'm',
 

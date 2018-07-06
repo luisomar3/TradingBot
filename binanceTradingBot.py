@@ -53,12 +53,12 @@ def acces():
     if cuenta.habilitado == True:
         print('Acceso a cuenta exitoso')
         time.sleep(0.5)
-        #monedaBase, portafolio = cuenta.portafolio(monedas)
+        monedaBase = cuenta.portafolio()
         capitalSTR = cuenta.capital()
         capitalINT = float(capitalSTR)
         cliente = cuenta.client
         
-        print('\n\n Su posicion es : {optima} BTC por trade'.format(optima = posicion ))
+        #print('\n\n Su posicion es : {optima} BTC por trade'.format(optima = posicion ))
         print('Esperando para iniciar ')
         time.sleep(0.5)
         return cliente
@@ -77,7 +77,8 @@ def liveTrader(cliente,moneda):
 
     capital = cuenta.capital()
     #print(capital)
-    pos =  posicion
+    pos =  updatePosicion()
+
     cliente = cuenta.client
             
     analizados =  estrategia(datos,ventana)
@@ -113,7 +114,7 @@ def liveTrader(cliente,moneda):
             
             msg = "Se compraron " + str(valorMoneda) + str(moneda) + " a " + str(precio)
             trader.send_email(msg,"COMPRA REALIZADA")
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#senal,analizados['signal'].tail(5))#
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))#senal,analizados['signal'].tail(5))#
         except Exception as e:
             print(e)
 
@@ -153,7 +154,7 @@ def liveTrader(cliente,moneda):
             
             trader.send_email(msg,"VENTA REALIZADA")
 
-            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados[['PDI','NDI','signal']].tail(2))##analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))
+            print(msg,moneda,'inTheMarket: ',inTheMarket,'signal:',analizados.index[-1])##)#analizados[['PDI','NDI','signal']].tail(2))
 
         except Exception as e:
             print(e)
@@ -162,7 +163,7 @@ def liveTrader(cliente,moneda):
     else:
         
         print('Esperando senal para {coin}'.format(coin = moneda),
-                'inTheMarket: ',inTheMarket,'signal:',senal,analizados[['PDI','NDI','signal']].tail(2))#analizados[['PDI','NDI','signal']].tail(2))
+                'inTheMarket: ',inTheMarket,'signal:',senal,analizados.index[-1])#analizados[['PDI','NDI','signal']].tail(2))
 
 
 
@@ -204,9 +205,10 @@ def run(acceso,delay):
     monedas = updateMonedas()
     print(monedas)
     if monedas:
-
+        posiciones = updatePosicion()
+        print("Posiciones de : {posicon}".format(posicon = posiciones))
         for moneda in monedas:
-
+            
             thread = threading.Thread(target=liveTrader, args=[acceso,moneda])
             thread.start()
     else:
@@ -274,6 +276,17 @@ def updateMonedas():
     with open('config.json', 'r') as f:
         config_monedas = json.load(f)
     return config_monedas["monedas"]
+
+
+def updatePosicion():
+    """Funcion para actualizar las monedas desde el archivo de configuracion
+    """
+    
+    with open('config.json', 'r') as f:
+        config_monedas = json.load(f)
+    return config_monedas["posicion"]
+
+
 if __name__ == '__main__':
     
     acceso = acces()

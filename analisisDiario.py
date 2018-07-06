@@ -16,7 +16,6 @@ adx = EstrategiaAdx()
 estrategia = adx.PDI_NDI_Cossover
 path_miconfig = os.getcwd() + '/config_diario.json'
 path = os.getcwd() + '/config.json'
-
 with open(path_miconfig, 'r') as f:
         config_general = json.load(f)
 

@@ -40,7 +40,7 @@ class BinanceAccount():
         setattr(self,'cliente',self.client)
          #Esto es para verificar que no podemos hacer trades sin meter la secret API
 
-    def portafolio(self,monedas):
+    def portafolio(self):
         
 
         coinBase  = self.client.get_asset_balance(asset=monedaBase)
@@ -48,21 +48,21 @@ class BinanceAccount():
         print('\n La moneda base es:{coin} \n\n'.format( coin = coinBase['asset']),'\n\n',
         'Su capital de trabajo es : {cap}'.format(cap = coinBase['free']))
 
-        print('\n Su portafolio de monedas es : \n\n')
-        lista = []
-        for moneda in monedas:
+       # print('\n Su portafolio de monedas es : \n\n')
+        
+        # for moneda in monedas:
 
-            balance = self.client.get_asset_balance(asset=moneda)
-            if balance is not None:
+        #     balance = self.client.get_asset_balance(asset=moneda)
+        #     if balance is not None:
 
-                lista.append(balance)
-            else :
-                print("Se ha excluido {coin} del sistema, por favor revisar moneda".format(coin = moneda))
+        #         lista.append(balance)
+        #     else :
+        #         print("Se ha excluido {coin} del sistema, por favor revisar moneda".format(coin = moneda))
             
-        df_balance = pd.DataFrame(lista)
-        df_balance = df_balance.set_index('asset')
-        print(df_balance.to_string())
-        return coinBase, df_balance
+        # df_balance = pd.DataFrame(lista)
+        # df_balance = df_balance.set_index('asset')
+        #print(df_balance.to_string())
+        return coinBase
 
     def capital(self):
 
