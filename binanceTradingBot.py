@@ -43,6 +43,7 @@ retraso = retraso_m * 60
 ventana = config['ventana']
 periodo = config['ventanaVWMA']
 vela = config['velaVWMA']
+conStopLoss = config['stopLoss']
 
 df = pd.DataFrame(columns = ['ID','MONEDA','CANTIDADC','PRECIOC','CANTIDADV','PRECIOV','GANANCIA','GANACIA%'])
 
@@ -188,9 +189,11 @@ def main(acceso):
                             minute=crontrigger, args=[acceso,delay_s])
         print('Revisando senal cada {min} hora'.format(min = intervalo))
         #scheduler1.start()
+    
+    if conStopLoss == 1 :
 
-    scheduler1.add_job(run2,trigger='cron',
-                            minute=crontrigger, args=[acceso])
+        scheduler1.add_job(run2,trigger='cron',
+                                minute=crontrigger, args=[acceso])
 
     scheduler1.start()
 
@@ -240,7 +243,7 @@ def stopLoss(cliente,moneda):
         stopPrice = vwma.iloc[-1]
 
         decimalPrecio = trader.decimales_precio(moneda)       
-        stopPrice =int(float(price) * 10**decimalPrecio) / 10.0**decimalPrecio
+        stopPrice =int(float(stopPrice) * 10**decimalPrecio) / 10.0**decimalPrecio
 
         stopPrice = trader.float_to_str(stopPrice)
         

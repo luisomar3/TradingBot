@@ -17,6 +17,8 @@ config = {
     "ventanaVWMA" : 14 ,
 
     "velaVWMA" : 'L' ,
+
+    "stopLoss" : 0 , #1 para si 0 para no.
     
     "monedaSimulacion": 'POE',  #moneda para simular y graficar ganancias.
     
@@ -47,7 +49,7 @@ config = {
     "email": "luisomar242@gmail.com",
 
     "email_password" : "omarhl$8",
-    "destinatarios" : "luisomar242@gmail.com"
+    "destinatarios" : ["luisomar242@gmail.com","hermesramirezfonseca@gmail.com"]#"hermesramirezfonseca@gmail.com"
 
 
 }
