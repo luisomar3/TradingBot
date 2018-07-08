@@ -61,6 +61,34 @@ class BaseStrategy():
         else:
             return  0
 
+    def posMayorQueNeg(self,row,indicadorAlza,indicadorBaja):
+        """Realiza el crossover de 2 indicadores, si el indicador de alza supera al de baja,
+            manda señal de compra, si el de baja supera al de alta, manda señal de venta.
+
+        """
+           
+        if (row[indicadorAlza] >= row[indicadorBaja] )  :
+            
+            return  int(1)
+        elif (row[indicadorBaja] > row[indicadorAlza] ) :
+
+            return  int(0)
+
+
+    def aroon100(self,row,indicadorAlza,indicadorBaja):
+        """Realiza el crossover de 2 indicadores, si el indicador de alza supera al de baja,
+            manda señal de compra, si el de baja supera al de alta, manda señal de venta.
+
+        """
+           
+        if (row[indicadorAlza] == 100 )  :
+            
+            return  int(1)
+        else :
+
+            return  int(0)
+
+
     def two_entry_signals_and(self,row,indicador1,indicador2):
         """En este caso, devolveremos la senal indicador 1 porque es la señal del ADX la que queremos como salida
         """

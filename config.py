@@ -10,9 +10,9 @@ config = {
 
     "estrategia":2, #Las estrategias actuales son 1-ADX+DI Y 2-DM+AROON
 
-    "ventana" :12,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :6,  #Cantidad de dias con que se hara el promedio movil
 
-    "ventanaAroon" : 13,
+    "ventanaAroon" : 5,
 
     "ventanaVWMA" : 14 ,
 
@@ -26,7 +26,7 @@ config = {
 
     "modo" : 2,  # 1 para simulacion, 2 para bot
 
-    "fechaInicio" : "1 Jun , 2018",
+    "fechaInicio" : "1 Jul , 2018",
    
     "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
@@ -38,7 +38,7 @@ config = {
 
     'posicion' : 0.0012,  # posicion
 
-    'interval' : '3',
+    'interval' : '30',
         
     'frame' : 'm',
 

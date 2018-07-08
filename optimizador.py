@@ -13,7 +13,10 @@ if config['estrategia'] == 1:
     estrategia = adx.PDI_NDI_Cossover
 elif config['estrategia'] == 2:
     estrategia = adx.AROON_DI_Cossover
-
+elif config['estrategia'] == 3 :
+    estrategia = adx.adxCrossover_AroonPositive
+elif config['estrategia'] == 4 :
+    estrategia = adx.adxCrossover_Aroon100
 def Backtest():
     
     
@@ -21,7 +24,7 @@ def Backtest():
     monedasBTC = feeder.get_btc_markets()
     try:
         portafolio = []
-
+        porcentajeTotal = []
         for moneda in monedasBTC:
 
             velas = feeder.get_candle(moneda)
@@ -32,6 +35,7 @@ def Backtest():
             promedio = adx.plot_and_stats(analizados,moneda,plot = False,historico = False)
             print(moneda,promedio)
             
+            porcentajeTotal.append(promedio['porcentajeAcumulado'])
             if promedio['porcentajeAcumulado'] > umbral :
                 portafolio.append(moneda)
         
@@ -39,6 +43,7 @@ def Backtest():
         print('Error analizando {coin}'.format(coin=moneda))    
         
     print('Las siguientes monedas presentan ganancia promedio > a {u}% '.format(u = umbral),portafolio)
-
+    suma = sum(porcentajeTotal)
+    print(suma,'porcentajeTotal')
 if __name__ == '__main__':
     Backtest()

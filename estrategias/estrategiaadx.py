@@ -62,8 +62,67 @@ class EstrategiaAdx(BaseStrategy):
         return datos
 
     
+    def adxCrossover_AroonPositive(self,dataFrame,ventana):
 
-    
+        datos = dataFrame.copy()
+
+        datos = indicadores.talib_ADX(datos,ventana)
+        datos = indicadores.aroon(datos)
+        datos['signalDM'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
+        datos['signalAroon'] = datos.apply(self.posMayorQueNeg,args = ('aroonUp','aroonDown'), axis = 1)
+        
+        datos = self.del_primera_venta(datos,'signalDM')
+        datos = self.del_primera_venta(datos,'signalAroon')
+        
+        datos['signal'] = datos.apply(self.two_entry_signals_and,args = ('DM','Aroon'),axis = 1 )
+        
+        
+        datos = self.extraer_salidas(datos)
+
+        return datos 
+
+
+    def adxCrossover_Aroon100(self,dataFrame,ventana):
+
+        datos = dataFrame.copy()
+
+        datos = indicadores.talib_ADX(datos,ventana)
+        datos = indicadores.aroon(datos)
+        datos['signalDM'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
+        datos['signalAroon'] = datos.apply(self.aroon100,args = ('aroonUp','aroonDown'), axis = 1)
+        
+        datos = self.del_primera_venta(datos,'signalDM')
+        datos = self.del_primera_venta(datos,'signalAroon')
+        
+        datos['signal'] = datos.apply(self.two_entry_signals_and,args = ('DM','Aroon'),axis = 1 )
+        
+        
+        datos = self.extraer_salidas(datos)
+
+        return datos 
+
+
+    def adxCrossover_AroonPositive_daily(self,dataframeInterval,dataFrameDaily,ventana):
+        
+        datos = dataframeInterval.copy()
+        datos2 = dataFrameDaily.copy()
+
+        porIntervalos = self.adxCrossover_AroonPositive(datos,ventana)
+        
+        porDia = self.PDI_NDI_Cossover(datos2,12)
+
+        diarios = 
+        analizados = estrategia(velas,ventana)
+        datos['signalDM'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
+        datos['signalAroon'] = datos.apply(self.aroon100,args = ('aroonUp','aroonDown'), axis = 1)
+
+
+
+
+
+
+
+
     def plot_and_stats(self,data1,moneda,plot=True,historico=True):
         """Grafica la estrategia
         """

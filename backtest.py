@@ -12,6 +12,12 @@ if config['estrategia'] == 1:
     estrategia = adx.PDI_NDI_Cossover
 elif config['estrategia'] == 2:
     estrategia = adx.AROON_DI_Cossover
+elif config['estrategia'] == 3 :
+    estrategia = adx.adxCrossover_AroonPositive
+elif config['estrategia'] == 4 :
+    estrategia = adx.adxCrossover_Aroon100
+
+
 def Backtest():
     
     velas = feeder.get_candle(moneda)
