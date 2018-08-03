@@ -8,9 +8,9 @@ config = {
 
     "secret_key":"Ggy0klNu9JOsPLDbhb7hMOQw20X5xo8Hi10Nv7jSg7asM2qvlVmEzkAjcQ5pXDHA",
 
-    "estrategia":2, #Las estrategias actuales son 1-ADX+DI Y 2-DM+AROON
+    "estrategia":1, #Las estrategias actuales son 1-ADX+DI Y 2-DM+AROON
 
-    "ventana" :6,  #Cantidad de dias con que se hara el promedio movil
+    "ventana" :14,  #Cantidad de dias con que se hara el promedio movil
 
     "ventanaAroon" : 5,
 
@@ -20,27 +20,27 @@ config = {
 
     "stopLoss" : 0 , #1 para si 0 para no.
     
-    "monedaSimulacion": 'POE',  #moneda para simular y graficar ganancias.
+    "monedaSimulacion": 'BTC',  #moneda para simular y graficar ganancias.
     
     "umbralOptimizador":10, #umbral para optimizador
 
-    "modo" : 2,  # 1 para simulacion, 2 para bot
+    "modo" : 1,  # 1 para simulacion, 2 para bot
 
-    "fechaInicio" : "1 Jul , 2018",
+    "fechaInicio" : "1 Jan , 2017",
    
     "fechaFinal"  : ""	,	 #los meses son en inglés, JAN FEB MAR APR MAY JUN JUL AUG SEP NOV DIC
 
     "capitalSimulacion" : 0.001, #Posicion a invertir para la optimizacion del portafolio
     
-    "MonedaBase": 'BTC', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
+    "MonedaBase": 'USDT', #Moneda base con cual se realizaran los Trades. USDT, BTC, ETH, etc..
 
     'monedas': ['POE'],#'BNB','MANA','BCN'],#,'BNB','XVG','XRP','EOS','ADA','NEO','ICX','BCC','NANO','IOST','BNB','TRX','ONT'],
 
     'posicion' : 0.0012,  # posicion
 
-    'interval' : '30',
+    'interval' : '4',
         
-    'frame' : 'm',
+    'frame' : 'h',
 
     'retraso' : 2, # CANTIDAD DE MINUTOS ANTES DE ANALIZAR EL MERCADO
     

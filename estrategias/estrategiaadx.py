@@ -110,8 +110,10 @@ class EstrategiaAdx(BaseStrategy):
         porIntervalos = self.adxCrossover_AroonPositive(datos,ventana)
         
         porDia = self.PDI_NDI_Cossover(datos2,12)
+        
+        
 
-        diarios = 
+        #diarios = 
         analizados = estrategia(velas,ventana)
         datos['signalDM'] = datos.apply(self.crossover,args = ('PDI','NDI'),axis = 1)
         datos['signalAroon'] = datos.apply(self.aroon100,args = ('aroonUp','aroonDown'), axis = 1)
